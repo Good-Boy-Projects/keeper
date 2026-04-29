@@ -305,7 +305,7 @@ a:hover {
 
 .bookmark-card-domain a {
   font-size: 0.78rem;
-  color:var(--keeper-grey);
+  color: var(--keeper-grey);
   text-decoration: underline;
 }
 
@@ -346,6 +346,90 @@ a:hover {
   font-size: 0.78rem;
   color: var(--keeper-grey);
   margin-top: auto;
+}
+
+/* Reading View */
+
+.reading-view {
+  max-width: 680px; /* matches your mockup's comfortable reading width */
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* dividers handle spacing instead */
+}
+
+.reading-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.78rem;
+  color: var(--keeper-grey);
+  padding: 12px 0;
+}
+
+.reading-divider {
+  margin: 0; /* no extra margin, padding on adjacent elements handles space */
+}
+
+.reading-title {
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1.3;
+  padding: 15px 0 12px 0;
+  margin: 0;
+}
+.reading-title a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.reading-title a:hover {
+  color: var(--keeper-blue);
+}
+
+.reading-title a:visited {
+  color: inherit;
+}
+
+.reading-author {
+  font-size: 0.85rem;
+  color: var(--keeper-grey);
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+.reading-hero {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reading-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.reading-caption {
+  font-size: 0.78rem;
+  color: var(--keeper-grey);
+  margin: 0;
+  font-style: italic;
+}
+
+.reading-body {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* space between paragraphs */
+}
+
+.reading-body p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7; /* generous line height for readability */
+  color: black;
 }
 
 /* footer! */
