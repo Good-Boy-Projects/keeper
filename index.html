@@ -36,14 +36,9 @@
                   id="add-url-input"
                   autofocus
                 />
-
                 <div class="add-form-actions">
-                  <button class="button-confirm" onclick="submitBookmark()">
-                    + Add
-                  </button>
-                  <button class="button-cancel" onclick="hideAddForm()">
-                    Cancel
-                  </button>
+                  <button class="button-confirm" onclick="submitBookmark()">+ Add</button>
+                  <button class="button-cancel" onclick="hideAddForm()">Cancel</button>
                 </div>
               </div>
             </div>
@@ -63,36 +58,18 @@
           <div class="links">
             <div class="link-title">Folders</div>
             <ul class="folder-links">
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Folder 1
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Folder 2
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Folder 3
-              </li>
+              <li><span class="link-arrow">󰘍</span><span class="link-icon"></span>Folder 1</li>
+              <li><span class="link-arrow">󰘍</span><span class="link-icon"></span>Folder 2</li>
+              <li><span class="link-arrow">󰘍</span><span class="link-icon"></span>Folder 3</li>
             </ul>
           </div>
 
           <div class="links">
             <div class="link-title">Tags</div>
             <ul class="tag-links">
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Tag 1
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Tag 2
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Tag 3
-              </li>
+              <li><span class="link-arrow">󰘍</span><span class="link-icon">󰓹</span>Tag 1</li>
+              <li><span class="link-arrow">󰘍</span><span class="link-icon">󰓹</span>Tag 2</li>
+              <li><span class="link-arrow">󰘍</span><span class="link-icon">󰓹</span>Tag 3</li>
             </ul>
           </div>
         </div>
@@ -100,7 +77,6 @@
         <main class="content">
           <div class="top-bar">
             <span class="top-bar-title">All Bookmarks</span>
-
             <div class="top-bar-icons">
               <div class="active" title="Grid View">Grid</div>
               <div title="List View">List</div>
@@ -111,44 +87,38 @@
           <div class="bookmark-list">
 
             <div class="bookmark-item">
-
-    <!-- invisible full-card link behind everything -->
-    <a href="/reading" class="bookmark-item-link"></a>
-
-    <div class="bookmark-thumb">
-        <img
-            src="https://www.google.com/s2/favicons?domain=nytimes.com&sz=64"
-            alt="nytimes.com favicon"
-        />
-    </div>
-
-    <div class="bookmark-body">
-        <div class="bookmark-content">
-            <span class="bookmark-title">Who is Satoshi Nakamoto?</span>
-            <p class="bookmark-desc">
-                Bitcoin's creator has hidden behind the pseudonym Satoshi
-                Nakamoto for 17 years. But a trail of clues buried deep in
-                crypto lore led to a 55-year-old computer scientist named
-                Adam Back.
-            </p>
-        </div>
-        <div class="bookmark-meta">
-            <a href="/folder/tech" class="meta-link bookmark-folder">■ Tech</a>
-            <a href="https://nytimes.com" class="meta-link bookmark-domain" target="_blank">nytimes.com</a>
-            <span class="bookmark-date">Published: 04-08-2026</span>
-            <span class="bookmark-date">Saved: 04-08-2026</span>
-        </div>
-    </div>
-
-    <div class="bookmark-actions">
-        <button class="action-btn read-btn" title="Reading Mode"></button>
-        <button class="action-btn favorite-btn" title="Favorite">♡</button>
-        <button class="action-btn edit-btn" title="Edit" onclick="showEditModal()">✎</button>
-        <button class="action-btn archive-btn" title="Archive"></button>
-        <button class="action-btn delete-btn" title="Delete"></button>
-    </div>
-
-</div>
+              <a href="/reading" class="bookmark-item-link"></a>
+              <div class="bookmark-thumb">
+                <img
+                  src="https://www.google.com/s2/favicons?domain=nytimes.com&sz=64"
+                  alt="nytimes.com favicon"
+                />
+              </div>
+              <div class="bookmark-body">
+                <div class="bookmark-content">
+                  <span class="bookmark-title">Who is Satoshi Nakamoto?</span>
+                  <p class="bookmark-desc">
+                    Bitcoin's creator has hidden behind the pseudonym Satoshi
+                    Nakamoto for 17 years. But a trail of clues buried deep in
+                    crypto lore led to a 55-year-old computer scientist named
+                    Adam Back.
+                  </p>
+                </div>
+                <div class="bookmark-meta">
+                  <a href="/folder/tech" class="meta-link bookmark-folder"> Tech</a>
+                  <a href="https://nytimes.com" class="meta-link bookmark-domain" target="_blank">nytimes.com</a>
+                  <span class="bookmark-date">Published: 04-08-2026</span>
+                  <span class="bookmark-date">Saved: 04-08-2026</span>
+                </div>
+              </div>
+              <div class="bookmark-actions">
+                <button class="action-btn read-btn" title="Reading Mode"></button>
+                <button class="action-btn favorite-btn" title="Favorite">♡</button>
+                <button class="action-btn edit-btn" title="Edit" onclick="showEditModal()">✎</button>
+                <button class="action-btn archive-btn" title="Archive"></button>
+                <button class="action-btn delete-btn" title="Delete"></button>
+              </div>
+            </div>
 
           </div>
         </main>
@@ -160,38 +130,22 @@
       </footer>
     </div>
 
-    <div
-      class="modal-overlay"
-      id="edit-modal-overlay"
-      onclick="closeEditModal(event)"
-    >
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="edit-modal-overlay" onclick="closeEditModal(event)">
       <div class="modal-box">
         <div class="modal-header">
           <span class="modal-title">Edit Bookmark</span>
           <button class="modal-close" onclick="hideEditModal()">✕</button>
         </div>
-
         <div class="modal-body">
           <div class="modal-field">
             <label class="modal-label">Title</label>
-            <input
-              class="modal-input"
-              type="text"
-              id="edit-title"
-              placeholder="Bookmark title"
-            />
+            <input class="modal-input" type="text" id="edit-title" placeholder="Bookmark title" />
           </div>
-
           <div class="modal-field">
             <label class="modal-label">URL</label>
-            <input
-              class="modal-input"
-              type="url"
-              id="edit-url"
-              placeholder="https://..."
-            />
+            <input class="modal-input" type="url" id="edit-url" placeholder="https://..." />
           </div>
-
           <div class="modal-field">
             <label class="modal-label">Folder</label>
             <select class="modal-input" id="edit-folder">
@@ -201,24 +155,15 @@
               <option value="running">Running</option>
             </select>
           </div>
-
           <div class="modal-field">
             <label class="modal-label">Tags</label>
-            <input
-              class="modal-input"
-              type="text"
-              id="edit-tags"
-              placeholder="tag1, tag2, tag3"
-            />
+            <input class="modal-input" type="text" id="edit-tags" placeholder="tag1, tag2, tag3" />
             <span class="modal-hint">Separate tags with commas</span>
           </div>
         </div>
-
         <div class="modal-footer">
           <button class="button-confirm" onclick="saveEdit()">Save</button>
-          <button class="button-cancel" onclick="hideEditModal()">
-            Cancel
-          </button>
+          <button class="button-cancel" onclick="hideEditModal()">Cancel</button>
         </div>
       </div>
     </div>
@@ -239,8 +184,6 @@
       function submitBookmark() {
         const url = document.getElementById("add-url-input").value;
         if (!url) return;
-        // Flask/HTMX will replace this later
-        // For now just log and close
         console.log("Adding:", url);
         hideAddForm();
       }
@@ -250,26 +193,21 @@
       }
 
       function hideEditModal() {
-        document
-          .getElementById("edit-modal-overlay")
-          .classList.remove("active");
+        document.getElementById("edit-modal-overlay").classList.remove("active");
       }
 
       function closeEditModal(event) {
-        // clicking the dark overlay background closes it
-        // clicking inside the box does not
         if (event.target === document.getElementById("edit-modal-overlay")) {
           hideEditModal();
         }
       }
 
       function saveEdit() {
-        const title = document.getElementById("edit-title").value;
-        const url = document.getElementById("edit-url").value;
+        const title  = document.getElementById("edit-title").value;
+        const url    = document.getElementById("edit-url").value;
         const folder = document.getElementById("edit-folder").value;
-        const tags = document.getElementById("edit-tags").value;
-        const notes = document.getElementById("edit-notes").value;
-        console.log("Saving:", { title, url, folder, tags, notes });
+        const tags   = document.getElementById("edit-tags").value;
+        console.log("Saving:", { title, url, folder, tags });
         hideEditModal();
       }
     </script>
