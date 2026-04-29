@@ -98,8 +98,7 @@
         </div>
 
         <main class="content">
-          
-           <div class="top-bar">
+          <div class="top-bar">
             <span class="top-bar-title">All Bookmarks</span>
 
             <div class="top-bar-icons">
@@ -110,54 +109,46 @@
           </div>
 
           <div class="bookmark-list">
-            <div class="reading-view">
-              <div class="reading-meta-top">
-                <span class="bookmark-folder">■ Tech</span>
-                <a href="#" class="bookmark-domain">nytimes.com</a>
-                <span class="bookmark-date">Published: 04-08-2026</span>
-                <span class="bookmark-date">Saved: 04-08-2026</span>
-              </div>
-
-              <div class="reading-divider">---</div>
-
-              <h1 class="reading-title">
-                <a
-                  href="https://www.nytimes.com/your-article-url"
-                  target="_blank"
-                >
-                  Who is Satoshi Nakamoto? My Quest to Unmask Bitcoin's Creator
-                </a>
-              </h1>
-
-              <p class="reading-author">By John Carreyrou</p>
-
-              <div class="reading-divider">---</div>
-
-              <div class="reading-hero">
-                <img src="https://placehold.co/800x500" alt="hero image" />
-                <p class="reading-caption">
-                  Adam Back, the British cryptographer, in Miami in February.
+            <div class="empty-state">
+              <div class="empty-state-box">
+                <p class="empty-state-text">No bookmarks here yet.</p>
+                <p class="empty-state-sub">
+                  Add your first bookmark to get started.
                 </p>
-              </div>
 
-              <div class="reading-divider">---</div>
+                <div id="empty-add-container">
+                  <button
+                    class="button"
+                    id="empty-add-btn"
+                    onclick="showEmptyForm()"
+                  >
+                    + Add Bookmark
+                  </button>
 
-              <div class="reading-body">
-                <p>
-                  While I pondered Mr. Back's reaction, another thought occurred
-                  to me. An Australian impostor had been sued for falsely
-                  claiming he was Satoshi.
-                </p>
-                <p>
-                  As anyone steeped in Bitcoin lore will tell you, Satoshi was a
-                  master at the art of maintaining anonymity on the internet,
-                  leaving few, if any, digital footprints behind.
-                </p>
-                <p>
-                  But Satoshi did leave behind a corpus of texts, including a
-                  nine-page white paper outlining his invention and his many
-                  posts on the Bitcointalk forum.
-                </p>
+                  <div
+                    class="add-form"
+                    id="empty-add-form"
+                    style="display: none"
+                  >
+                    <input
+                      class="add-url-input"
+                      type="url"
+                      placeholder="Paste URL here..."
+                      id="empty-url-input"
+                    />
+                    <div class="add-form-actions">
+                      <button
+                        class="button-confirm"
+                        onclick="submitEmptyBookmark()"
+                      >
+                        + Add
+                      </button>
+                      <button class="button-cancel" onclick="hideEmptyForm()">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -171,25 +162,23 @@
     </div>
 
     <script>
-      function showAddForm() {
-        document.getElementById("add-bookmark-btn").style.display = "none";
-        document.getElementById("add-form").style.display = "flex";
-        document.getElementById("add-url-input").focus();
+      function showEmptyForm() {
+        document.getElementById("empty-add-btn").style.display = "none";
+        document.getElementById("empty-add-form").style.display = "flex";
+        document.getElementById("empty-url-input").focus();
       }
 
-      function hideAddForm() {
-        document.getElementById("add-bookmark-btn").style.display = "block";
-        document.getElementById("add-form").style.display = "none";
-        document.getElementById("add-url-input").value = "";
+      function hideEmptyForm() {
+        document.getElementById("empty-add-btn").style.display = "block";
+        document.getElementById("empty-add-form").style.display = "none";
+        document.getElementById("empty-url-input").value = "";
       }
 
-      function submitBookmark() {
-        const url = document.getElementById("add-url-input").value;
+      function submitEmptyBookmark() {
+        const url = document.getElementById("empty-url-input").value;
         if (!url) return;
-        // Flask/HTMX will replace this later
-        // For now just log and close
         console.log("Adding:", url);
-        hideAddForm();
+        hideEmptyForm();
       }
     </script>
   </body>

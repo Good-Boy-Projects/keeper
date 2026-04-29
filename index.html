@@ -19,7 +19,35 @@
           <div class="sidebar-header">Keeper v0.1.0</div>
 
           <div class="function-box">
-            <button class="button">+ Add Bookmark</button>
+            <div id="add-bookmark-container">
+              <button
+                class="button"
+                id="add-bookmark-btn"
+                onclick="showAddForm()"
+              >
+                + Add Bookmark
+              </button>
+
+              <div class="add-form" id="add-form" style="display: none">
+                <input
+                  class="add-url-input"
+                  type="url"
+                  placeholder="Paste URL here..."
+                  id="add-url-input"
+                  autofocus
+                />
+
+                <div class="add-form-actions">
+                  <button class="button-confirm" onclick="submitBookmark()">
+                    + Add
+                  </button>
+                  <button class="button-cancel" onclick="hideAddForm()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <input class="search" type="search" placeholder="Search..." />
           </div>
 
@@ -72,232 +100,57 @@
         <main class="content">
           <div class="top-bar">
             <span class="top-bar-title">All Bookmarks</span>
+
             <div class="top-bar-icons">
-              <button class="active">⊞</button>
-              <button>≡</button>
-              <button></button>
+              <div class="active" title="Grid View">Grid</div>
+              <div title="List View">List</div>
+              <div title="Settings">Settings</div>
             </div>
           </div>
 
           <div class="bookmark-list">
 
             <div class="bookmark-item">
-              <div class="bookmark-thumb">
-                <img src="https://placehold.co/80x80" alt="thumbnail" />
-              </div>
-              <div class="bookmark-body">
-                <div class="bookmark-content">
-                  <a href="#" class="bookmark-title"
-                    >Who is Satoshi Nakamoto? My Quest to Unmask Bitcoin's
-                    Creator</a
-                  >
-                  <p class="bookmark-desc">
-                    Bitcoin's creator has hidden behind the pseudonym Satoshi
-                    Nakamoto for 17 years. But a trail of clues buried deep in
-                    crypto lore led to a 55-year-old computer scientist named
-                    Adam Back.
-                  </p>
-                </div>
-                <div class="bookmark-meta">
-                  <span class="bookmark-folder"> Tech</span>
-                  <a href="#" class="bookmark-domain">nytimes.com</a>
-                  <span class="bookmark-date">Published: 04-08-2026</span>
-                  <span class="bookmark-date">Saved: 04-08-2026</span>
-                </div>
-              </div>
-            </div>
 
-            <div class="bookmark-item">
-              <div class="bookmark-thumb">
-                <img src="https://placehold.co/80x80" alt="thumbnail" />
-              </div>
-              <div class="bookmark-body">
-                <div class="bookmark-content">
-                  <a href="#" class="bookmark-title"
-                    >Generative AI vegetarianism</a
-                  >
-                  <p class="bookmark-desc">
-                    Hello, it’s me: I’m a generative AI vegetarian. The tech
-                    industry is convinced this is the future; every app on my
-                    phone and most of the apps on my computer want me to use
-                    their new AI features.
-                  </p>
-                </div>
-                <div class="bookmark-meta">
-                  <span class="bookmark-folder"> Tech</span>
-                  <a href="#" class="bookmark-domain">sboots.ca</a>
-                  <span class="bookmark-date">Published: 04-08-2026</span>
-                  <span class="bookmark-date">Saved: 04-08-2026</span>
-                </div>
-              </div>
-            </div>
+    <!-- invisible full-card link behind everything -->
+    <a href="/reading" class="bookmark-item-link"></a>
 
-            <div class="bookmark-item">
-              <div class="bookmark-thumb">
-                <img src="https://placehold.co/80x80" alt="thumbnail" />
-              </div>
-              <div class="bookmark-body">
-                <div class="bookmark-content">
-                  <a href="#" class="bookmark-title"
-                    >The Three-Legged Stool: A Manifesto for a Smaller, Denser
-                    Internet</a
-                  >
-                  <p class="bookmark-desc">
-                    “The Three-Legged Stool” is the Initiative for Digital
-                    Public Infrastructure’s banner white paper: the culmination
-                    of our work here at the lab so far and our roadmap for our
-                    efforts in the coming years. It was written primarily by
-                    Chand Rajendra-Nicolucci and Michael Sugarman under the
-                    editorial direction of Ethan Zuckerman.
-                  </p>
-                </div>
-                <div class="bookmark-meta">
-                  <span class="bookmark-folder"> Tech</span>
-                  <a href="#" class="bookmark-domain"
-                    >publicinfrastructure.org</a
-                  >
-                  <span class="bookmark-date">Published: 04-08-2026</span>
-                  <span class="bookmark-date">Saved: 04-08-2026</span>
-                </div>
-              </div>
-            </div>
+    <div class="bookmark-thumb">
+        <img
+            src="https://www.google.com/s2/favicons?domain=nytimes.com&sz=64"
+            alt="nytimes.com favicon"
+        />
+    </div>
 
-            <div class="bookmark-item">
-              <div class="bookmark-thumb">
-                <img src="https://placehold.co/80x80" alt="thumbnail" />
-              </div>
-              <div class="bookmark-body">
-                <div class="bookmark-content">
-                  <a href="#" class="bookmark-title"
-                    >Who is Satoshi Nakamoto? My Quest to Unmask Bitcoin's
-                    Creator</a
-                  >
-                  <p class="bookmark-desc">
-                    Bitcoin's creator has hidden behind the pseudonym Satoshi
-                    Nakamoto for 17 years. But a trail of clues buried deep in
-                    crypto lore led to a 55-year-old computer scientist named
-                    Adam Back.
-                  </p>
-                </div>
-                <div class="bookmark-meta">
-                  <span class="bookmark-folder"> Tech</span>
-                  <a href="#" class="bookmark-domain">nytimes.com</a>
-                  <span class="bookmark-date">Published: 04-08-2026</span>
-                  <span class="bookmark-date">Saved: 04-08-2026</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="bookmark-item">
-              <div class="bookmark-thumb">
-                <img src="https://placehold.co/80x80" alt="thumbnail" />
-              </div>
-              <div class="bookmark-body">
-                <div class="bookmark-content">
-                  <a href="#" class="bookmark-title"
-                    >Generative AI vegetarianism</a
-                  >
-                  <p class="bookmark-desc">
-                    Hello, it’s me: I’m a generative AI vegetarian. The tech
-                    industry is convinced this is the future; every app on my
-                    phone and most of the apps on my computer want me to use
-                    their new AI features.
-                  </p>
-                </div>
-                <div class="bookmark-meta">
-                  <span class="bookmark-folder"> Tech</span>
-                  <a href="#" class="bookmark-domain">sboots.ca</a>
-                  <span class="bookmark-date">Published: 04-08-2026</span>
-                  <span class="bookmark-date">Saved: 04-08-2026</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="bookmark-item">
-              <div class="bookmark-thumb">
-                <img src="https://placehold.co/80x80" alt="thumbnail" />
-              </div>
-              <div class="bookmark-body">
-                <div class="bookmark-content">
-                  <a href="#" class="bookmark-title"
-                    >The Three-Legged Stool: A Manifesto for a Smaller, Denser
-                    Internet</a
-                  >
-                  <p class="bookmark-desc">
-                    “The Three-Legged Stool” is the Initiative for Digital
-                    Public Infrastructure’s banner white paper: the culmination
-                    of our work here at the lab so far and our roadmap for our
-                    efforts in the coming years. It was written primarily by
-                    Chand Rajendra-Nicolucci and Michael Sugarman under the
-                    editorial direction of Ethan Zuckerman.
-                  </p>
-                </div>
-                <div class="bookmark-meta">
-                  <span class="bookmark-folder"> Tech</span>
-                  <a href="#" class="bookmark-domain"
-                    >publicinfrastructure.org</a
-                  >
-                  <span class="bookmark-date">Published: 04-08-2026</span>
-                  <span class="bookmark-date">Saved: 04-08-2026</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Bookmark Grid Placeholder 
-          <div class="bookmark-grid">
-            <div class="bookmark-card">
-              <div class="bookmark-card-header">
-                <span class="bookmark-card-domain"
-                  ><a href="#">nytimes.com</a></span
-                >
-                <a href="#" class="bookmark-card-title"
-                  >Who is Satoshi Nakamoto? My Quest to Unmask Bitcoin's
-                  Creator</a
-                >
-              </div>
-              <div class="bookmark-card-image">
-                <img src="https://placehold.co/400x220" alt="thumbnail" />
-              </div>
-              <p class="bookmark-card-desc">
+    <div class="bookmark-body">
+        <div class="bookmark-content">
+            <span class="bookmark-title">Who is Satoshi Nakamoto?</span>
+            <p class="bookmark-desc">
                 Bitcoin's creator has hidden behind the pseudonym Satoshi
                 Nakamoto for 17 years. But a trail of clues buried deep in
-                crypto lore led to a 55-year-old computer scientist named Adam
-                Back.
-              </p>
-              <div class="bookmark-card-meta">
-                <span class="bookmark-folder"> Tech</span>
-                <span class="bookmark-date">Published: 04-08-2026</span>
-                <span class="bookmark-date">Saved: 04-08-2026</span>
-              </div>
-            </div>
+                crypto lore led to a 55-year-old computer scientist named
+                Adam Back.
+            </p>
+        </div>
+        <div class="bookmark-meta">
+            <a href="/folder/tech" class="meta-link bookmark-folder">■ Tech</a>
+            <a href="https://nytimes.com" class="meta-link bookmark-domain" target="_blank">nytimes.com</a>
+            <span class="bookmark-date">Published: 04-08-2026</span>
+            <span class="bookmark-date">Saved: 04-08-2026</span>
+        </div>
+    </div>
 
-            <div class="bookmark-card">
-              <div class="bookmark-card-header">
-                <span class="bookmark-card-domain"
-                  ><a href="#">sboots.ca</a></span
-                >
-                <a href="#" class="bookmark-card-title"
-                  >Generative AI vegetarianism</a
-                >
-              </div>
-              <div class="bookmark-card-image">
-                <img src="https://placehold.co/400x220" alt="thumbnail" />
-              </div>
-              <p class="bookmark-card-desc">
-                Hello, it's me: I'm a generative AI vegetarian. The tech
-                industry is convinced this is the future; every app on my phone
-                and most of the apps on my computer want me to use their new AI
-                features.
-              </p>
-              <div class="bookmark-card-meta">
-                <span class="bookmark-folder"> Tech</span>
-                <span class="bookmark-date">Published: 04-08-2026</span>
-                <span class="bookmark-date">Saved: 04-08-2026</span>
-              </div>
-            </div>
+    <div class="bookmark-actions">
+        <button class="action-btn read-btn" title="Reading Mode"></button>
+        <button class="action-btn favorite-btn" title="Favorite">♡</button>
+        <button class="action-btn edit-btn" title="Edit" onclick="showEditModal()">✎</button>
+        <button class="action-btn archive-btn" title="Archive"></button>
+        <button class="action-btn delete-btn" title="Delete"></button>
+    </div>
+
+</div>
+
           </div>
-          -->
         </main>
       </div>
 
@@ -306,5 +159,119 @@
         <span>v0.1.0 &nbsp; <a href="https://keeper.fyi">Keeper.fyi</a></span>
       </footer>
     </div>
+
+    <div
+      class="modal-overlay"
+      id="edit-modal-overlay"
+      onclick="closeEditModal(event)"
+    >
+      <div class="modal-box">
+        <div class="modal-header">
+          <span class="modal-title">Edit Bookmark</span>
+          <button class="modal-close" onclick="hideEditModal()">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-field">
+            <label class="modal-label">Title</label>
+            <input
+              class="modal-input"
+              type="text"
+              id="edit-title"
+              placeholder="Bookmark title"
+            />
+          </div>
+
+          <div class="modal-field">
+            <label class="modal-label">URL</label>
+            <input
+              class="modal-input"
+              type="url"
+              id="edit-url"
+              placeholder="https://..."
+            />
+          </div>
+
+          <div class="modal-field">
+            <label class="modal-label">Folder</label>
+            <select class="modal-input" id="edit-folder">
+              <option value="">No folder</option>
+              <option value="tech">Tech</option>
+              <option value="design">Design</option>
+              <option value="running">Running</option>
+            </select>
+          </div>
+
+          <div class="modal-field">
+            <label class="modal-label">Tags</label>
+            <input
+              class="modal-input"
+              type="text"
+              id="edit-tags"
+              placeholder="tag1, tag2, tag3"
+            />
+            <span class="modal-hint">Separate tags with commas</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="button-confirm" onclick="saveEdit()">Save</button>
+          <button class="button-cancel" onclick="hideEditModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function showAddForm() {
+        document.getElementById("add-bookmark-btn").style.display = "none";
+        document.getElementById("add-form").style.display = "flex";
+        document.getElementById("add-url-input").focus();
+      }
+
+      function hideAddForm() {
+        document.getElementById("add-bookmark-btn").style.display = "block";
+        document.getElementById("add-form").style.display = "none";
+        document.getElementById("add-url-input").value = "";
+      }
+
+      function submitBookmark() {
+        const url = document.getElementById("add-url-input").value;
+        if (!url) return;
+        // Flask/HTMX will replace this later
+        // For now just log and close
+        console.log("Adding:", url);
+        hideAddForm();
+      }
+
+      function showEditModal() {
+        document.getElementById("edit-modal-overlay").classList.add("active");
+      }
+
+      function hideEditModal() {
+        document
+          .getElementById("edit-modal-overlay")
+          .classList.remove("active");
+      }
+
+      function closeEditModal(event) {
+        // clicking the dark overlay background closes it
+        // clicking inside the box does not
+        if (event.target === document.getElementById("edit-modal-overlay")) {
+          hideEditModal();
+        }
+      }
+
+      function saveEdit() {
+        const title = document.getElementById("edit-title").value;
+        const url = document.getElementById("edit-url").value;
+        const folder = document.getElementById("edit-folder").value;
+        const tags = document.getElementById("edit-tags").value;
+        const notes = document.getElementById("edit-notes").value;
+        console.log("Saving:", { title, url, folder, tags, notes });
+        hideEditModal();
+      }
+    </script>
   </body>
 </html>
