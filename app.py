@@ -14,6 +14,17 @@ def index():
         tags=tags
     )
 
+@app.route("/grid")
+def grid():
+    bookmarks = get_bookmarks()
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("grid.html",
+        bookmarks=bookmarks,
+        folders=folders,
+        tags=tags
+    )
+
 @app.route("/bookmark/<int:id>")
 def reading(id):
     bookmark = get_bookmark(id)
