@@ -3,11 +3,11 @@
   <div class="bookmark-card">
 
     <div class="bookmark-card-actions">
-      <button class="action-btn read-btn" title="Reading Mode"></button>
+      <button class="action-btn read-btn" title="Reading Mode"></button>
       <button class="action-btn favorite-btn" title="Favorite">♡</button>
       <button class="action-btn edit-btn" title="Edit" onclick="showEditModal()">✎</button>
-      <button class="action-btn archive-btn" title="Archive"></button>
-      <button class="action-btn delete-btn" title="Delete"></button>
+      <button class="action-btn archive-btn" title="Archive"></button>
+      <button class="action-btn delete-btn" title="Delete"></button>
     </div>
 
     <div class="bookmark-card-header">
@@ -28,7 +28,7 @@
     <div class="bookmark-card-meta">
       {% if bookmark['folders'] %}
         {% for folder in bookmark['folders'].split(',') %}
-          <a href="/folder/{{ folder }}" class="meta-link bookmark-folder">{{ folder }}</a>
+          <a href="/folder/{{ folder }}" class="meta-link bookmark-folder"> {{ folder }}</a>
         {% endfor %}
       {% endif %}
       <span class="bookmark-date">Published: {{ bookmark['published'] }}</span>
