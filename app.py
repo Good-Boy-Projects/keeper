@@ -1,5 +1,6 @@
-from flask import Flask, render_template
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags
+from flask import Flask, render_template, redirect, request
+from urllib.parse import urlparse
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark
 
 app = Flask(__name__)
 
@@ -37,6 +38,33 @@ def reading(id):
         folders=folders,
         tags=tags
     )
+
+@app.route("/bookmarks", methods=["POST"])
+def add_bookmark():
+    url = request.form.get("url")
+    if not url:
+        return "URL required", 400
+
+    domain = urlparse(url).netloc
+
+    create_bookmark({
+        "url": url,
+        "domain": domain,
+        "title": None,
+        "description": None,
+        "author": None,
+        "content": None,
+        "image_url": None,
+        "favicon_url": None,
+        "published": None,
+        "word_count": 0,
+        "site_name": None,
+        "language": None,
+        "read_time": 0,
+        "canonical_url": None,
+    })
+
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
