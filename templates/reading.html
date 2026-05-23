@@ -1,192 +1,56 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KEEPER</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/2026-04-28_Keeper-favicon32.png') }}" />
-  </head>
+{% extends "base.html" %}
 
-  <body>
-    <div class="app">
-      <div class="app-body">
-        <div class="sidebar">
-          <div class="sidebar-header">Keeper v0.1.0</div>
+{% block topbar %}{{ bookmark['title'] }}{% endblock %}
 
-          <div class="function-box">
-            <div id="add-bookmark-container">
-              <button
-                class="button"
-                id="add-bookmark-btn"
-                onclick="showAddForm()"
-              >
-                + Add Bookmark
-              </button>
+{% block title %}{{ bookmark['title'] }} — Keeper{% endblock %}
 
-              <div class="add-form" id="add-form" style="display: none">
-                <input
-                  class="add-url-input"
-                  type="url"
-                  placeholder="Paste URL here..."
-                  id="add-url-input"
-                  autofocus
-                />
+{% block content %}
+<div class="reading-view">
+  <div class="reading-meta-top">
+    {% if bookmark['folders'] %}
+      {% for folder in bookmark['folders'].split(',') %}
+        <a href="/folder/{{ folder }}" class="meta-link bookmark-folder">{{ folder }}</a>
+      {% endfor %}
+    {% endif %}
+    <a href="{{ bookmark['url'] }}" class="meta-link bookmark-domain" target="_blank">
+      {{ bookmark['domain'] }}
+    </a>
+    {% if bookmark['published'] %}
+      <span class="bookmark-date">Published: {{ bookmark['published'] }}</span>
+    {% endif %}
+    <span class="bookmark-date">Saved: {{ bookmark['saved_at'] }}</span>
+  </div>
 
-                <div class="add-form-actions">
-                  <button class="button-confirm" onclick="submitBookmark()">
-                    + Add
-                  </button>
-                  <button class="button-cancel" onclick="hideAddForm()">
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
+  <hr>
 
-            <input class="search" type="search" placeholder="Search..." />
-          </div>
+  <h1 class="reading-title">
+    <a href="{{ bookmark['url'] }}" target="_blank">{{ bookmark['title'] }}</a>
+  </h1>
 
-          <div class="links">
-            <ul class="main-links">
-              <li>All Bookmarks</li>
-              <li><span class="link-icon"></span>Favorites</li>
-              <li><span class="link-icon">󱈠</span>Untagged</li>
-              <li><span class="link-icon">󰀼</span>Archive</li>
-            </ul>
-          </div>
+  {% if bookmark['author'] %}
+    <p class="reading-author">By {{ bookmark['author'] }}</p>
+  {% endif %}
 
-          <div class="links">
-            <div class="link-title">Folders</div>
-            <ul class="folder-links">
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Folder 1
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Folder 2
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Folder 3
-              </li>
-            </ul>
-          </div>
+  <hr>
 
-          <div class="links">
-            <div class="link-title">Tags</div>
-            <ul class="tag-links">
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Tag 1
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Tag 2
-              </li>
-              <li>
-                <span class="link-arrow">󰘍</span
-                ><span class="link-icon"></span>Tag 3
-              </li>
-            </ul>
-          </div>
-        </div>
+  {% if bookmark['image_url'] %}
+  <div class="reading-hero">
+    <img src="{{ bookmark['image_url'] }}" alt="hero image" />
+  </div>
+  <hr>
+  {% endif %}
 
-        <main class="content">
-          
-           <div class="top-bar">
-            <span class="top-bar-title">All Bookmarks</span>
-
-            <div class="top-bar-icons">
-              <div class="active" title="Grid View">Grid</div>
-              <div title="List View">List</div>
-              <div title="Settings">Settings</div>
-            </div>
-          </div>
-
-          <div class="bookmark-list">
-            <div class="reading-view">
-              <div class="reading-meta-top">
-                <span class="bookmark-folder"> Tech</span>
-                <a href="#" class="bookmark-domain">nytimes.com</a>
-                <span class="bookmark-date">Published: 04-08-2026</span>
-                <span class="bookmark-date">Saved: 04-08-2026</span>
-              </div>
-
-              <div class="reading-divider">---</div>
-
-              <h1 class="reading-title">
-                <a
-                  href="https://www.nytimes.com/your-article-url"
-                  target="_blank"
-                >
-                  Who is Satoshi Nakamoto? My Quest to Unmask Bitcoin's Creator
-                </a>
-              </h1>
-
-              <p class="reading-author">By John Carreyrou</p>
-
-              <div class="reading-divider">---</div>
-
-              <div class="reading-hero">
-                <img src="https://placehold.co/800x500" alt="hero image" />
-                <p class="reading-caption">
-                  Adam Back, the British cryptographer, in Miami in February.
-                </p>
-              </div>
-
-              <div class="reading-divider">---</div>
-
-              <div class="reading-body">
-                <p>
-                  While I pondered Mr. Back's reaction, another thought occurred
-                  to me. An Australian impostor had been sued for falsely
-                  claiming he was Satoshi.
-                </p>
-                <p>
-                  As anyone steeped in Bitcoin lore will tell you, Satoshi was a
-                  master at the art of maintaining anonymity on the internet,
-                  leaving few, if any, digital footprints behind.
-                </p>
-                <p>
-                  But Satoshi did leave behind a corpus of texts, including a
-                  nine-page white paper outlining his invention and his many
-                  posts on the Bitcointalk forum.
-                </p>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-
-      <footer class="status-bar">
-        <span>10 Bookmarks &nbsp; 15,000 Words</span>
-        <span>v0.1.0 &nbsp; <a href="https://keeper.fyi">Keeper.fyi</a></span>
-      </footer>
-    </div>
-
-    <script>
-      function showAddForm() {
-        document.getElementById("add-bookmark-btn").style.display = "none";
-        document.getElementById("add-form").style.display = "flex";
-        document.getElementById("add-url-input").focus();
-      }
-
-      function hideAddForm() {
-        document.getElementById("add-bookmark-btn").style.display = "block";
-        document.getElementById("add-form").style.display = "none";
-        document.getElementById("add-url-input").value = "";
-      }
-
-      function submitBookmark() {
-        const url = document.getElementById("add-url-input").value;
-        if (!url) return;
-        // Flask/HTMX will replace this later
-        // For now just log and close
-        console.log("Adding:", url);
-        hideAddForm();
-      }
-    </script>
-  </body>
-</html>
+  <div class="reading-body">
+    {% if bookmark['content'] %}
+      {% for paragraph in bookmark['content'].split('\n\n') %}
+        <p>{{ paragraph }}</p>
+      {% endfor %}
+    {% else %}
+      <p class="reading-placeholder">
+        No article content saved.
+        <a href="{{ bookmark['url'] }}" target="_blank">Read on {{ bookmark['domain'] }}</a>
+      </p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
