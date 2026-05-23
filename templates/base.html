@@ -54,18 +54,26 @@
           <div class="links">
             <div class="link-title">Folders</div>
             <ul class="folder-links">
-              <li><span class="link-arrow">󰘍</span><span class="link-icon"></span>Folder 1</li>
-              <li><span class="link-arrow">󰘍</span><span class="link-icon"></span>Folder 2</li>
-              <li><span class="link-arrow">󰘍</span><span class="link-icon"></span>Folder 3</li>
+{% for folder in folders %}
+<li>
+  <span class="link-arrow">󰘍</span>
+  <span class="link-icon"></span>
+  <a href="/folder/{{ folder }}">{{ folder }}</a>
+</li>
+{% endfor %}
             </ul>
           </div>
 
           <div class="links">
             <div class="link-title">Tags</div>
             <ul class="tag-links">
-              <li><span class="link-arrow">󰘍</span><span class="link-icon">󰓹</span>Tag 1</li>
-              <li><span class="link-arrow">󰘍</span><span class="link-icon">󰓹</span>Tag 2</li>
-              <li><span class="link-arrow">󰘍</span><span class="link-icon">󰓹</span>Tag 3</li>
+{% for tag in tags %}
+<li>
+  <span class="link-arrow">󰘍</span>
+  <span class="link-icon">󰓹</span>
+  <a href="/tag/{{ tag }}">{{ tag }}</a>
+</li>
+{% endfor %}
             </ul>
           </div>
         </div>
