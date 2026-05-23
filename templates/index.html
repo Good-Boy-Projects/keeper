@@ -3,40 +3,10 @@
 {% block content %}
 
   {% if bookmarks %}
-    {% for bookmark in bookmarks %}
-    <div class="bookmark-item">
-      <a href="/bookmark/{{ bookmark['id'] }}" class="bookmark-item-link"></a>
-      <div class="bookmark-thumb">
-        <img src="https://www.google.com/s2/favicons?domain={{ bookmark['domain'] }}&sz=64"
-             alt="{{ bookmark['domain'] }} favicon" />
-      </div>
-      <div class="bookmark-body">
-        <div class="bookmark-content">
-          <span class="bookmark-title">{{ bookmark['title'] }}</span>
-          <p class="bookmark-desc">{{ bookmark['description'] }}</p>
-        </div>
-        <div class="bookmark-meta">
-          {% if bookmark['folders'] %}
-            {% for folder in bookmark['folders'].split(',') %}
-              <a href="/folder/{{ folder }}" class="meta-link bookmark-folder">{{ folder }}</a>
-            {% endfor %}
-          {% endif %}
-          <span class="bookmark-date">Published: {{ bookmark['published'] }}</span>
-          <span class="bookmark-date">Saved: {{ bookmark['saved_at'] }}</span>
-        </div>
-      </div>
-      <div class="bookmark-actions">
-        <button class="action-btn read-btn" title="Reading Mode"></button>
-        <button class="action-btn favorite-btn" title="Favorite">♡</button>
-        <button class="action-btn edit-btn" title="Edit" onclick="showEditModal()">✎</button>
-        <button class="action-btn archive-btn" title="Archive"></button>
-        <button class="action-btn delete-btn" title="Delete"></button>
-      </div>
-    </div>
-    {% endfor %}
+    {% include "partials/bookmark_list.html" %}
 
   {% else %}
     {% include "empty_state.html" %}
   {% endif %}
-
+  
 {% endblock %}
