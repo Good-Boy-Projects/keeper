@@ -16,28 +16,31 @@
 
           <div class="function-box">
             <div id="add-bookmark-container">
-              <button
-                class="button"
-                id="add-bookmark-btn"
-                onclick="showAddForm()"
-              >
-                + Add Bookmark
-              </button>
+  <button
+    class="button"
+    id="add-bookmark-btn"
+    onclick="showAddForm()"
+  >
+    + Add Bookmark
+  </button>
 
-              <div class="add-form" id="add-form" style="display: none">
-                <input
-                  class="add-url-input"
-                  type="url"
-                  placeholder="Paste URL here..."
-                  id="add-url-input"
-                  autofocus
-                />
-                <div class="add-form-actions">
-                  <button class="button-confirm" onclick="submitBookmark()">+ Add</button>
-                  <button class="button-cancel" onclick="hideAddForm()">Cancel</button>
-                </div>
-              </div>
-            </div>
+  <div class="add-form" id="add-form" style="display: none">
+    <form method="POST" action="/bookmarks">
+      <input
+        class="add-url-input"
+        type="url"
+        name="url"
+        placeholder="Paste URL here..."
+        id="add-url-input"
+        autofocus
+      />
+      <div class="add-form-actions">
+        <button type="submit" class="button-confirm">+ Add</button>
+        <button type="button" class="button-cancel" onclick="hideAddForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
 
             <input class="search" type="search" placeholder="Search..." />
           </div>
@@ -58,7 +61,7 @@
 <li>
   <span class="link-arrow">󰘍</span>
   <span class="link-icon"></span>
-  <a href="/folder/{{ folder }}">{{ folder }}</a>
+  <a href="/folder/{{ folder }}">{{ folder }}</a
 </li>
 {% endfor %}
             </ul>
