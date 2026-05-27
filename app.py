@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark
 
 app = Flask(__name__)
 
@@ -64,6 +64,11 @@ def add_bookmark():
         "canonical_url": None,
     })
 
+    return redirect("/")
+
+@app.route("/bookmark/<int:id>/delete", methods=["POST"])
+def delete_bookmark_route(id):
+    delete_bookmark(id)
     return redirect("/")
 
 if __name__ == "__main__":

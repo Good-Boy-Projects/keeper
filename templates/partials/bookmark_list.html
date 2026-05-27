@@ -25,7 +25,11 @@
       <button class="action-btn favorite-btn" title="Favorite">♡</button>
       <button class="action-btn edit-btn" title="Edit" onclick="showEditModal()">✎</button>
       <button class="action-btn archive-btn" title="Archive"></button>
-      <button class="action-btn delete-btn" title="Delete"></button>
+      
+        <form method="POST" action="/bookmark/{{ bookmark['id'] }}/delete">
+  <button type="submit" class="action-btn delete-btn" title="Delete">🗑</button>
+</form>
+
       </div>
     </div>
     {% endfor %}
