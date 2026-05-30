@@ -66,6 +66,11 @@ def add_bookmark():
 
     return redirect("/")
 
+@app.route("/bookmark/<int:id>/favorite", methods=["POST"])
+def toggle_favorite_route(id):
+    toggle_favorite(id)
+    return redirect(request.referrer or "/")
+
 @app.route("/bookmark/<int:id>/delete", methods=["POST"])
 def delete_bookmark_route(id):
     delete_bookmark(id)
