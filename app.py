@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, toggle_archive, toggle_favorite
 
 app = Flask(__name__)
 
