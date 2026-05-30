@@ -71,6 +71,11 @@ def toggle_favorite_route(id):
     toggle_favorite(id)
     return redirect(request.referrer or "/")
 
+@app.route("/bookmark/<int:id>/archive", methods=["POST"])
+def toggle_archive_route(id):
+    toggle_archive(id)
+    return redirect(request.referrer or "/")
+
 @app.route("/bookmark/<int:id>/delete", methods=["POST"])
 def delete_bookmark_route(id):
     delete_bookmark(id)
