@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, toggle_archive, toggle_favorite
 
 app = Flask(__name__)
 
@@ -65,6 +65,16 @@ def add_bookmark():
     })
 
     return redirect("/")
+
+@app.route("/bookmark/<int:id>/favorite", methods=["POST"])
+def toggle_favorite_route(id):
+    toggle_favorite(id)
+    return redirect(request.referrer or "/")
+
+@app.route("/bookmark/<int:id>/archive", methods=["POST"])
+def toggle_archive_route(id):
+    toggle_archive(id)
+    return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/delete", methods=["POST"])
 def delete_bookmark_route(id):
