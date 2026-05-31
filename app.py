@@ -95,5 +95,29 @@ def delete_bookmark_route(id):
     delete_bookmark(id)
     return redirect("/")
 
+@app.route("/folder/<name>")
+def folder_view(name):
+    bookmarks = get_bookmarks(folder=name)
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("index.html",
+        bookmarks=bookmarks,
+        folders=folders,
+        tags=tags,
+        active_filter=name
+    )
+
+@app.route("/tag/<name>")
+def tag_view(name):
+    bookmarks = get_bookmarks(tag=name)
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("index.html",
+        bookmarks=bookmarks,
+        folders=folders,
+        tags=tags,
+        active_filter=name
+    )
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
