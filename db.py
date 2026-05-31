@@ -6,9 +6,8 @@ def get_db():
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-def get_bookmarks():
-    db = get_db()
-    return db.execute("""
+def get_bookmarks(folder=None, tag=None):
+    query = """
         SELECT b.*,
                GROUP_CONCAT(DISTINCT f.name) as folders,
                GROUP_CONCAT(DISTINCT t.name) as tags
@@ -18,9 +17,16 @@ def get_bookmarks():
         LEFT JOIN bookmark_tags bt    ON b.id = bt.bookmark_id
         LEFT JOIN tags t              ON bt.tag_id = t.id
         WHERE b.is_archived = 0
-        GROUP BY b.id
-        ORDER BY b.saved_at DESC
-    """).fetchall()
+    """
+    params = []
+    if folder:
+        query += " AND f.name = ?"
+        params.append(folder)
+    if tag:
+        query += " AND t.name = ?"
+        params.append(tag)
+    query += " GROUP BY b.id ORDER BY b.saved_at DESC"
+    return db.execute(query, params).fetchall()
 
 def get_bookmark(id):
     db = get_db()
