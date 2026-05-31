@@ -109,42 +109,38 @@
     </div>
 
     <!-- Edit Modal -->
-    <div class="modal-overlay" id="edit-modal-overlay" onclick="closeEditModal(event)">
-      <div class="modal-box">
-        <div class="modal-header">
-          <span class="modal-title">Edit Bookmark</span>
-          <button class="modal-close" onclick="hideEditModal()">✕</button>
+<div class="modal-overlay" id="edit-modal-overlay" onclick="closeEditModal(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">Edit Bookmark</span>
+      <button class="modal-close" onclick="hideEditModal()">✕</button>
+    </div>
+
+    <form id="edit-form" method="POST" action="">
+      <div class="modal-body">
+        <div class="modal-field">
+          <label class="modal-label">Title</label>
+          <input class="modal-input" type="text" name="title" id="edit-title" placeholder="Bookmark title" />
         </div>
-        <div class="modal-body">
-          <div class="modal-field">
-            <label class="modal-label">Title</label>
-            <input class="modal-input" type="text" id="edit-title" placeholder="Bookmark title" />
-          </div>
-          <div class="modal-field">
-            <label class="modal-label">URL</label>
-            <input class="modal-input" type="url" id="edit-url" placeholder="https://..." />
-          </div>
-          <div class="modal-field">
-            <label class="modal-label">Folder</label>
-            <select class="modal-input" id="edit-folder">
-              <option value="">No folder</option>
-              <option value="tech">Tech</option>
-              <option value="design">Design</option>
-              <option value="running">Running</option>
-            </select>
-          </div>
-          <div class="modal-field">
-            <label class="modal-label">Tags</label>
-            <input class="modal-input" type="text" id="edit-tags" placeholder="tag1, tag2, tag3" />
-            <span class="modal-hint">Separate tags with commas</span>
-          </div>
+        <div class="modal-field">
+          <label class="modal-label">Folders</label>
+          <input class="modal-input" type="text" name="folders" id="edit-folders" placeholder="Tech, Design" />
+          <span class="modal-hint">Separate folders with commas</span>
         </div>
-        <div class="modal-footer">
-          <button class="button-confirm" onclick="saveEdit()">Save</button>
-          <button class="button-cancel" onclick="hideEditModal()">Cancel</button>
+        <div class="modal-field">
+          <label class="modal-label">Tags</label>
+          <input class="modal-input" type="text" name="tags" id="edit-tags" placeholder="tag1, tag2, tag3" />
+          <span class="modal-hint">Separate tags with commas</span>
         </div>
       </div>
-    </div>
+      <div class="modal-footer">
+        <button type="submit" class="button-confirm">Save</button>
+        <button type="button" class="button-cancel" onclick="hideEditModal()">Cancel</button>
+      </div>
+    </form>
+
+  </div>
+</div>
 
     <script>
       function showAddForm() {
@@ -166,9 +162,18 @@
         hideAddForm();
       }
 
-      function showEditModal() {
-        document.getElementById("edit-modal-overlay").classList.add("active");
-      }
+      function showEditModal(id, title, folders, tags) {
+  // Set the form action to the correct route for this bookmark
+  document.getElementById("edit-form").action = "/bookmark/" + id + "/update";
+
+  // Pre-populate the fields with the bookmark's current values
+  document.getElementById("edit-title").value = title || "";
+  document.getElementById("edit-folders").value = folders || "";
+  document.getElementById("edit-tags").value = tags || "";
+
+  // Show the modal
+  document.getElementById("edit-modal-overlay").classList.add("active");
+}
 
       function hideEditModal() {
         document.getElementById("edit-modal-overlay").classList.remove("active");

@@ -20,6 +20,7 @@
           <span class="bookmark-date">Saved: {{ bookmark['saved_at'] }}</span>
         </div>
       </div>
+      
       <div class="bookmark-actions">
         <button class="action-btn read-btn" title="Reading Mode"></button>
 
@@ -27,7 +28,13 @@
           <button type="submit" class="action-btn favorite-btn" title="Favorite">♡</button>
         </form>
 
-      <button class="action-btn edit-btn" title="Edit" onclick="showEditModal()">✎</button>
+    {% set safe_title = bookmark['title']|replace("'", "\\'") %}
+    {% set safe_folders = bookmark['folders'] if bookmark['folders'] else "" %}
+    {% set safe_tags = bookmark['tags'] if bookmark['tags'] else "" %}
+    <button
+      class="action-btn edit-btn"
+      title="Edit"
+      onclick="showEditModal({{ bookmark['id'] }}, '{{ safe_title }}', '{{ safe_folders }}', '{{ safe_tags }}')">✎</button>
       
         <form method="POST" action="/bookmark/{{ bookmark['id'] }}/archive">
           <button type="submit" class="action-btn archive-btn" title="Archive"></button>

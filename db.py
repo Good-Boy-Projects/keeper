@@ -57,13 +57,11 @@ def update_bookmark(id, data):
     db = get_db()
     db.execute("""
         UPDATE bookmarks
-        SET title = :title,
-            description = :description,
-            author = :author
+        SET title = :title
         WHERE id = :id
-    """, {**data, "id": id})
+    """, {"title": data["title"], "id": id})
 
-    # Re-wire folders — delete existing then re-insert
+    # Re-wire folders
     db.execute("DELETE FROM bookmark_folders WHERE bookmark_id = ?", (id,))
     for folder_name in data.get("folders", []):
         folder = db.execute(
@@ -75,7 +73,7 @@ def update_bookmark(id, data):
                 (id, folder["id"])
             )
 
-    # Re-wire tags — same pattern
+    # Re-wire tags
     db.execute("DELETE FROM bookmark_tags WHERE bookmark_id = ?", (id,))
     for tag_name in data.get("tags", []):
         tag = db.execute(
