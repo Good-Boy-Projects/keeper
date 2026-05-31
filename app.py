@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, toggle_archive, toggle_favorite
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
 
 app = Flask(__name__)
 
@@ -117,6 +117,42 @@ def tag_view(name):
         folders=folders,
         tags=tags,
         active_filter=name
+    )
+
+@app.route("/favorites")
+def favorites():
+    bookmarks = get_favorites()
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("index.html",
+        bookmarks=bookmarks,
+        folders=folders,
+        tags=tags,
+        active_filter="Favorites"
+    )
+
+@app.route("/archived")
+def archived():
+    bookmarks = get_archived()
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("index.html",
+        bookmarks=bookmarks,
+        folders=folders,
+        tags=tags,
+        active_filter="Archived"
+    )
+
+@app.route("/untagged")
+def untagged():
+    bookmarks = get_untagged()
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("index.html",
+        bookmarks=bookmarks,
+        folders=folders,
+        tags=tags,
+        active_filter="Untagged"
     )
 
 if __name__ == "__main__":
