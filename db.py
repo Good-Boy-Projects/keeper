@@ -7,6 +7,7 @@ def get_db():
     return conn
 
 def get_bookmarks(folder=None, tag=None):
+    db = get_db()
     query = """
         SELECT b.*,
                GROUP_CONCAT(DISTINCT f.name) as folders,
