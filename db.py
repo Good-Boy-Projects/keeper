@@ -68,7 +68,6 @@ def update_bookmark(id, data):
         WHERE id = :id
     """, {"title": data["title"], "id": id})
 
-    # Re-wire folders
     db.execute("DELETE FROM bookmark_folders WHERE bookmark_id = ?", (id,))
     for folder_name in data.get("folders", []):
         folder = db.execute(
@@ -80,7 +79,6 @@ def update_bookmark(id, data):
                 (id, folder["id"])
             )
 
-    # Re-wire tags
     db.execute("DELETE FROM bookmark_tags WHERE bookmark_id = ?", (id,))
     for tag_name in data.get("tags", []):
         tag = db.execute(
@@ -123,4 +121,50 @@ def get_all_tags():
     db = get_db()
     return db.execute("SELECT * FROM tags ORDER BY name ASC").fetchall()
 
+def get_favorites():
+    db = get_db()
+    return db.execute("""
+        SELECT b.*,
+               GROUP_CONCAT(DISTINCT f.name) as folders,
+               GROUP_CONCAT(DISTINCT t.name) as tags
+        FROM bookmarks b
+        LEFT JOIN bookmark_folders bf ON b.id = bf.bookmark_id
+        LEFT JOIN folders f           ON bf.folder_id = f.id
+        LEFT JOIN bookmark_tags bt    ON b.id = bt.bookmark_id
+        LEFT JOIN tags t              ON bt.tag_id = t.id
+        WHERE b.is_favorite = 1
+        GROUP BY b.id
+        ORDER BY b.saved_at DESC
+    """).fetchall()
 
+def get_archived():
+    db = get_db()
+    return db.execute("""
+        SELECT b.*,
+               GROUP_CONCAT(DISTINCT f.name) as folders,
+               GROUP_CONCAT(DISTINCT t.name) as tags
+        FROM bookmarks b
+        LEFT JOIN bookmark_folders bf ON b.id = bf.bookmark_id
+        LEFT JOIN folders f           ON bf.folder_id = f.id
+        LEFT JOIN bookmark_tags bt    ON b.id = bt.bookmark_id
+        LEFT JOIN tags t              ON bt.tag_id = t.id
+        WHERE b.is_archived = 1
+        GROUP BY b.id
+        ORDER BY b.saved_at DESC
+    """).fetchall()
+
+def get_untagged():
+    db = get_db()
+    return db.execute("""
+        SELECT b.*,
+               GROUP_CONCAT(DISTINCT f.name) as folders,
+               GROUP_CONCAT(DISTINCT t.name) as tags
+        FROM bookmarks b
+        LEFT JOIN bookmark_folders bf ON b.id = bf.bookmark_id
+        LEFT JOIN folders f           ON bf.folder_id = f.id
+        LEFT JOIN bookmark_tags bt    ON b.id = bt.bookmark_id
+        LEFT JOIN tags t              ON bt.tag_id = t.id
+        WHERE b.id NOT IN (SELECT bookmark_id FROM bookmark_tags)
+        GROUP BY b.id
+        ORDER BY b.saved_at DESC
+    """).fetchall()
