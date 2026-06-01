@@ -6,7 +6,7 @@ def get_db():
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-def get_bookmarks(folder=None, tag=None):
+def get_bookmarks(folder=None, tag=None, q=None):
     db = get_db()
     query = """
         SELECT b.*,
