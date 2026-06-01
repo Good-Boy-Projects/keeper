@@ -1,56 +1,5 @@
 <div class="bookmark-grid">
   {% for bookmark in bookmarks %}
-  <div class="bookmark-card">
-
-    <div class="bookmark-card-actions">
-      <button class="action-btn read-btn" title="Reading Mode"></button>
-
-      <form method="POST" action="/bookmark/{{ bookmark['id'] }}/favorite">
-  <button type="submit" class="action-btn favorite-btn" title="Favorite">♡</button>
-</form>
-
-{% set safe_title = bookmark['title']|replace("'", "\\'") %}
-    {% set safe_folders = bookmark['folders'] if bookmark['folders'] else "" %}
-    {% set safe_tags = bookmark['tags'] if bookmark['tags'] else "" %}
-    <button
-      class="action-btn edit-btn"
-      title="Edit"
-      onclick="showEditModal({{ bookmark['id'] }}, '{{ safe_title }}', '{{ safe_folders }}', '{{ safe_tags }}')">✎</button>      
-      <form method="POST" action="/bookmark/{{ bookmark['id'] }}/archive">
-  <button type="submit" class="action-btn archive-btn" title="Archive"></button>
-</form>
-
-      <form method="POST" action="/bookmark/{{ bookmark['id'] }}/delete">
-  <button type="submit" class="action-btn delete-btn" title="Delete">🗑</button>
-
-</form>
-    </div>
-
-    <div class="bookmark-card-header">
-      <span class="bookmark-card-domain">
-        <a href="{{ bookmark['url'] }}" target="_blank">{{ bookmark['domain'] }}</a>
-      </span>
-      <a href="/bookmark/{{ bookmark['id'] }}" class="bookmark-card-title">
-        {{ bookmark['title'] }}
-      </a>
-    </div>
-
-    <div class="bookmark-card-image">
-      <img src="{{ bookmark['image_url'] or 'https://placehold.co/400x220' }}" alt="thumbnail" />
-    </div>
-
-    <p class="bookmark-card-desc">{{ bookmark['description'] }}</p>
-
-    <div class="bookmark-card-meta">
-      {% if bookmark['folders'] %}
-        {% for folder in bookmark['folders'].split(',') %}
-          <a href="/folder/{{ folder }}" class="meta-link bookmark-folder"> {{ folder }}</a>
-        {% endfor %}
-      {% endif %}
-      <span class="bookmark-date">Published: {{ bookmark['published'] }}</span>
-      <span class="bookmark-date">Saved: {{ bookmark['saved_at'] }}</span>
-    </div>
-
-  </div>
+    {% include "partials/bookmark_card.html" %}
   {% endfor %}
 </div>
