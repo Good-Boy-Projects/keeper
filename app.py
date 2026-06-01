@@ -51,7 +51,7 @@ def add_bookmark():
     data["article_path"] = save_article(data)
     bookmark_id = create_bookmark(data)
 
-    return redirect(f"/bookmark/{bookmark_id}")
+    return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/update", methods=["POST"])
 def update_bookmark_route(id):
