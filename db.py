@@ -94,8 +94,13 @@ def update_bookmark(id, data):
 
     db.commit()
 
+from files import delete_article
+
 def delete_bookmark(id):
     db = get_db()
+    bookmark = get_bookmark(id)
+    if bookmark and bookmark["article_path"]:
+        delete_article(bookmark["article_path"])
     db.execute("DELETE FROM bookmarks WHERE id = ?", (id,))
     db.commit()
 
