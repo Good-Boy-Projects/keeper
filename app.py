@@ -4,6 +4,9 @@ from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, creat
 from scraper import fetch_metadata
 from files import save_article
 
+def is_htmx():
+    return request.headers.get("HX-Request") == "true"
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -11,6 +14,10 @@ def index():
     bookmarks = get_bookmarks()
     folders = get_all_folders()
     tags = get_all_tags()
+    if is_htmx():
+        return render_template("partials/bookmark_list.html",
+            bookmarks=bookmarks
+        )
     return render_template("index.html",
         bookmarks=bookmarks,
         folders=folders,
@@ -22,6 +29,10 @@ def grid():
     bookmarks = get_bookmarks()
     folders = get_all_folders()
     tags = get_all_tags()
+    if is_htmx():
+        return render_template("partials/bookmark_grid.html",
+            bookmarks=bookmarks
+        )
     return render_template("grid.html",
         bookmarks=bookmarks,
         folders=folders,
@@ -87,6 +98,10 @@ def folder_view(name):
     bookmarks = get_bookmarks(folder=name)
     folders = get_all_folders()
     tags = get_all_tags()
+    if is_htmx():
+        return render_template("partials/bookmark_list.html",
+            bookmarks=bookmarks
+        )
     return render_template("index.html",
         bookmarks=bookmarks,
         folders=folders,
@@ -99,6 +114,10 @@ def tag_view(name):
     bookmarks = get_bookmarks(tag=name)
     folders = get_all_folders()
     tags = get_all_tags()
+    if is_htmx():
+        return render_template("partials/bookmark_list.html",
+            bookmarks=bookmarks
+        )
     return render_template("index.html",
         bookmarks=bookmarks,
         folders=folders,
@@ -111,6 +130,10 @@ def favorites():
     bookmarks = get_favorites()
     folders = get_all_folders()
     tags = get_all_tags()
+    if is_htmx():
+        return render_template("partials/bookmark_list.html",
+            bookmarks=bookmarks
+        )
     return render_template("index.html",
         bookmarks=bookmarks,
         folders=folders,
@@ -123,6 +146,10 @@ def archived():
     bookmarks = get_archived()
     folders = get_all_folders()
     tags = get_all_tags()
+    if is_htmx():
+        return render_template("partials/bookmark_list.html",
+            bookmarks=bookmarks
+        )
     return render_template("index.html",
         bookmarks=bookmarks,
         folders=folders,
@@ -135,6 +162,10 @@ def untagged():
     bookmarks = get_untagged()
     folders = get_all_folders()
     tags = get_all_tags()
+    if is_htmx():
+        return render_template("partials/bookmark_list.html",
+            bookmarks=bookmarks
+        )
     return render_template("index.html",
         bookmarks=bookmarks,
         folders=folders,
