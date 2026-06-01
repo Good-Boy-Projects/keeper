@@ -89,6 +89,9 @@ def toggle_favorite_route(id):
     toggle_favorite(id)
     if is_htmx():
         bookmark = get_bookmark(id)
+        view = request.form.get("view", "list")
+        if view == "grid":
+            return render_template("partials/bookmark_card.html", bookmark=bookmark)
         return render_template("partials/bookmark_item.html", bookmark=bookmark)
     return redirect(request.referrer or "/")
 
