@@ -134,11 +134,27 @@
         <main class="content">
           <div class="top-bar">
             <span class="top-bar-title">{% block topbar %}All Bookmarks{% endblock %}</span>
+            
             <div class="top-bar-icons">
-              <div class="active" title="Grid View">Grid</div>
-              <div title="List View">List</div>
+              
+              <div hx-get="/"
+                  hx-target="#bookmark-list"
+                  hx-swap="innerHTML"
+                  hx-push-url="true"
+                  title="List View"
+                  onclick="setActiveView(this)"
+                  class="active">List</div>
+
+                  <div hx-get="/grid"
+                  hx-target="#bookmark-list"
+                  hx-swap="innerHTML"
+                  hx-push-url="true"
+                  title="Grid View"
+                  onclick="setActiveView(this)">Grid</div>
+                  
               <div title="Settings">Settings</div>
             </div>
+
           </div>
 
           <div class="bookmark-list" id="bookmark-list">
@@ -193,6 +209,12 @@
 </div>
 
     <script>
+
+      function setActiveView(el) {
+        document.querySelectorAll('.top-bar-icons div').forEach(d => d.classList.remove('active'));
+        el.classList.add('active');
+      }
+
       function showAddForm() {
         document.getElementById("add-bookmark-btn").style.display = "none";
         document.getElementById("add-form").style.display = "flex";
