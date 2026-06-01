@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS bookmarks (
     site_name     TEXT,
     language      TEXT,
     read_time     INTEGER,
-    canonical_url TEXT
+    canonical_url TEXT,
+    article_path  TEXT
 );
 
 CREATE TABLE IF NOT EXISTS folders (
