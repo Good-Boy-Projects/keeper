@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, request
 from urllib.parse import urlparse
 from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
+from scraper import fetch_metadata
+from files import save_article
 
 app = Flask(__name__)
 
@@ -45,26 +47,11 @@ def add_bookmark():
     if not url:
         return "URL required", 400
 
-    domain = urlparse(url).netloc
+    data = fetch_metadata(url)
+    data["article_path"] = save_article(data)
+    bookmark_id = create_bookmark(data)
 
-    create_bookmark({
-        "url": url,
-        "domain": domain,
-        "title": None,
-        "description": None,
-        "author": None,
-        "content": None,
-        "image_url": None,
-        "favicon_url": None,
-        "published": None,
-        "word_count": 0,
-        "site_name": None,
-        "language": None,
-        "read_time": 0,
-        "canonical_url": None,
-    })
-
-    return redirect("/")
+    return redirect(f"/bookmark/{bookmark_id}")
 
 @app.route("/bookmark/<int:id>/update", methods=["POST"])
 def update_bookmark_route(id):
