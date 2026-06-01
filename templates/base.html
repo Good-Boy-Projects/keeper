@@ -40,7 +40,16 @@
             </div>
         </div>
 
-            <input class="search" type="search" placeholder="Search..." />
+            <input
+              class="search"
+              type="search"
+              name="q"
+              placeholder="Search..."
+              hx-get="/"
+              hx-trigger="input delay:300ms"
+              hx-target="#bookmark-list"
+              hx-swap="innerHTML"
+            />
           </div>
 
           <div class="links">
@@ -90,7 +99,7 @@
             </div>
           </div>
 
-          <div class="bookmark-list">
+          <div class="bookmark-list" id="bookmark-list">
 
             {% block content %}
             

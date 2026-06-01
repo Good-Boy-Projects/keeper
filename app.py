@@ -11,7 +11,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    bookmarks = get_bookmarks()
+    q = request.args.get("q", "")
+    bookmarks = get_bookmarks(q=q)
     folders = get_all_folders()
     tags = get_all_tags()
     if is_htmx():

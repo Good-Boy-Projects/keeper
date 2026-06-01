@@ -6,7 +6,7 @@ def get_db():
     conn.execute("PRAGMA foreign_keys = ON")
     return conn
 
-def get_bookmarks(folder=None, tag=None):
+def get_bookmarks(folder=None, tag=None, q=None):
     db = get_db()
     query = """
         SELECT b.*,
@@ -26,6 +26,9 @@ def get_bookmarks(folder=None, tag=None):
     if tag:
         query += " AND t.name = ?"
         params.append(tag)
+    if q:
+        query += " AND (b.title LIKE ? OR b.description LIKE ?)"
+        params += [f"%{q}%", f"%{q}%"]
     query += " GROUP BY b.id ORDER BY b.saved_at DESC"
     return db.execute(query, params).fetchall()
 
