@@ -13,7 +13,7 @@
     <div class="app">
       <div class="app-body">
         <div class="sidebar">
-          <div class="sidebar-header">Keeper v0.1.0</div>
+          <div class="sidebar-header"><a href="/">Keeper v0.1.0</a></div>
 
           <div class="function-box">
             <div id="add-bookmark-container">
@@ -54,10 +54,41 @@
 
           <div class="links">
             <ul class="main-links">
-              <li><a href="/">All Bookmarks</a></li>
-              <li><span class="link-icon"></span><a href="/favorites">Favorites</a></li>
-              <li><span class="link-icon">󱈠</span><a href="/untagged">Untagged</a></li>
-              <li><span class="link-icon">󰀼</span><a href="/archived">Archive</a></li>
+              <li>
+                <a href="/"
+                  hx-get="/"
+                  hx-target="#bookmark-list"
+                  hx-swap="innerHTML"
+                  hx-push-url="true">All Bookmarks</a>
+              </li>              
+
+              <li><span class="link-icon"></span>
+                <a href="/favorites"
+                  hx-get="/favorites"
+                  hx-target="#bookmark-list"
+                  hx-swap="innerHTML"
+                  hx-push-url="true">Favorites
+                </a>
+              </li>
+
+              <li><span class="link-icon">󱈠</span>
+                <a href="/untagged"
+                  hx-get="/untagged"
+                  hx-target="#bookmark-list"
+                  hx-swap="innerHTML"
+                  hx-push-url="true">Untagged
+                </a>
+              </li>
+
+              <li><span class="link-icon">󰀼</span>
+                <a href="/archive"
+                  hx-get="/archive"
+                  hx-target="#bookmark-list"
+                  hx-swap="innerHTML"
+                  hx-push-url="true">Archive
+                </a>
+              </li>
+
             </ul>
           </div>
 
