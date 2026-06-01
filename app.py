@@ -53,6 +53,11 @@ def reading(id):
         tags=tags
     )
 
+@app.route("/bookmark/<int:id>/item")
+def bookmark_item(id):
+    bookmark = get_bookmark(id)
+    return render_template("partials/bookmark_item.html", bookmark=bookmark)
+
 @app.route("/bookmarks", methods=["POST"])
 def add_bookmark():
     url = request.form.get("url")
@@ -82,11 +87,16 @@ def update_bookmark_route(id):
 @app.route("/bookmark/<int:id>/favorite", methods=["POST"])
 def toggle_favorite_route(id):
     toggle_favorite(id)
+    if is_htmx():
+        bookmark = get_bookmark(id)
+        return render_template("partials/bookmark_item.html", bookmark=bookmark)
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/archive", methods=["POST"])
 def toggle_archive_route(id):
     toggle_archive(id)
+    if is_htmx():
+        return ""
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/delete", methods=["POST"])
