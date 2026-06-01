@@ -50,11 +50,13 @@ def create_bookmark(data):
         INSERT INTO bookmarks (
             url, title, description, author, content,
             image_url, favicon_url, domain, published,
-            word_count, site_name, language, read_time, canonical_url
+            word_count, site_name, language, read_time,
+            canonical_url, article_path
         ) VALUES (
             :url, :title, :description, :author, :content,
             :image_url, :favicon_url, :domain, :published,
-            :word_count, :site_name, :language, :read_time, :canonical_url
+            :word_count, :site_name, :language, :read_time,
+            :canonical_url, :article_path
         )
     """, data)
     db.commit()
