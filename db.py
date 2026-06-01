@@ -50,11 +50,13 @@ def create_bookmark(data):
         INSERT INTO bookmarks (
             url, title, description, author, content,
             image_url, favicon_url, domain, published,
-            word_count, site_name, language, read_time, canonical_url
+            word_count, site_name, language, read_time,
+            canonical_url, article_path
         ) VALUES (
             :url, :title, :description, :author, :content,
             :image_url, :favicon_url, :domain, :published,
-            :word_count, :site_name, :language, :read_time, :canonical_url
+            :word_count, :site_name, :language, :read_time,
+            :canonical_url, :article_path
         )
     """, data)
     db.commit()
@@ -92,8 +94,13 @@ def update_bookmark(id, data):
 
     db.commit()
 
+from files import delete_article
+
 def delete_bookmark(id):
     db = get_db()
+    bookmark = get_bookmark(id)
+    if bookmark and bookmark["article_path"]:
+        delete_article(bookmark["article_path"])
     db.execute("DELETE FROM bookmarks WHERE id = ?", (id,))
     db.commit()
 
