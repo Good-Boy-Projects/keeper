@@ -105,6 +105,8 @@ def toggle_archive_route(id):
 @app.route("/bookmark/<int:id>/delete", methods=["POST"])
 def delete_bookmark_route(id):
     delete_bookmark(id)
+    if is_htmx():
+        return ""
     return redirect("/")
 
 @app.route("/folder/<name>")
