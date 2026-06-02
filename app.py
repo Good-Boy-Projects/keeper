@@ -68,7 +68,10 @@ def add_bookmark():
     data["article_path"] = save_article(data)
     bookmark_id = create_bookmark(data)
 
-    return redirect(request.referrer or "/")
+    if is_htmx():
+        bookmark = get_bookmark(bookmark_id)
+        return render_template("partials/bookmark_item.html", bookmark=bookmark)
+    return redirect("/")
 
 @app.route("/bookmark/<int:id>/update", methods=["POST"])
 def update_bookmark_route(id):

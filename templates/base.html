@@ -16,41 +16,47 @@
           <div class="sidebar-header"><a href="/">Keeper v0.1.0</a></div>
 
           <div class="function-box">
-            <div id="add-bookmark-container">
-              <button class="button" id="add-bookmark-btn" onclick="showAddForm()">
-                + Add Bookmark
-              </button>
 
-            <div class="add-form" id="add-form" style="display: none">
-              <form method="POST" action="/bookmarks">
-                <input
-                  class="add-url-input"
-                  type="url"
-                  name="url"
-                  placeholder="Paste URL here..."
-                  id="add-url-input"
-                  autofocus
-                />
+  <div id="add-bookmark-container">
 
-                  <div class="add-form-actions">
-                    <button type="submit" class="button-confirm">+ Add</button>
-                    <button type="button" class="button-cancel" onclick="hideAddForm()">Cancel</button>
-                  </div>
-                </form>
-            </div>
+    <button class="button" id="add-bookmark-btn" onclick="showAddForm()">
+      + Add Bookmark
+    </button>
+
+    <div id="add-form-wrapper" style="display: none">
+      <form id="add-form"
+            hx-post="/bookmarks"
+            hx-target="#bookmark-list"
+            hx-swap="afterbegin"
+            hx-on::after-request="this.reset(); hideAddForm();">
+        <input
+          class="add-url-input"
+          type="url"
+          name="url"
+          placeholder="Paste URL here..."
+          id="add-url-input"
+        />
+        <div class="add-form-actions">
+          <button type="submit" class="button-confirm">+ Add</button>
+          <button type="button" class="button-cancel" onclick="hideAddForm()">Cancel</button>
         </div>
+      </form>
+    </div>
 
-            <input
-              class="search"
-              type="search"
-              name="q"
-              placeholder="Search..."
-              hx-get="/"
-              hx-trigger="input delay:300ms"
-              hx-target="#bookmark-list"
-              hx-swap="innerHTML"
-            />
-          </div>
+  </div>
+
+  <input
+    class="search"
+    type="search"
+    name="q"
+    placeholder="Search..."
+    hx-get="/"
+    hx-trigger="input delay:300ms"
+    hx-target="#bookmark-list"
+    hx-swap="innerHTML"
+  />
+
+</div>
 
           <div class="links">
             <ul class="main-links">
@@ -216,16 +222,15 @@
       }
 
       function showAddForm() {
-        document.getElementById("add-bookmark-btn").style.display = "none";
-        document.getElementById("add-form").style.display = "flex";
-        document.getElementById("add-url-input").focus();
-      }
+  document.getElementById("add-bookmark-btn").style.display = "none";
+  document.getElementById("add-form-wrapper").style.display = "block";
+  document.getElementById("add-url-input").focus();
+}
 
-      function hideAddForm() {
-        document.getElementById("add-bookmark-btn").style.display = "block";
-        document.getElementById("add-form").style.display = "none";
-        document.getElementById("add-url-input").value = "";
-      }
+function hideAddForm() {
+  document.getElementById("add-bookmark-btn").style.display = "block";
+  document.getElementById("add-form-wrapper").style.display = "none";
+}
 
       function submitBookmark() {
         const url = document.getElementById("add-url-input").value;
