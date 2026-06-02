@@ -63,23 +63,11 @@ def add_bookmark():
     url = request.form.get("url")
     if not url:
         return "URL required", 400
-    domain = urlparse(url).netloc
-    bookmark_id = create_bookmark({
-        "url": url,
-        "domain": domain,
-        "title": domain,
-        "description": None,
-        "author": None,
-        "content": None,
-        "image_url": None,
-        "favicon_url": None,
-        "published": None,
-        "word_count": 0,
-        "site_name": None,
-        "language": None,
-        "read_time": 0,
-        "canonical_url": None,
-    })
+
+    data = fetch_metadata(url)
+    data["article_path"] = save_article(data)
+    bookmark_id = create_bookmark(data)
+
     if is_htmx():
         bookmark = get_bookmark(bookmark_id)
         return render_template("partials/bookmark_item.html", bookmark=bookmark)
