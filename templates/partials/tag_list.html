@@ -1,0 +1,14 @@
+<ul class="tag-links" id="tag-list">
+  {% for tag in tags %}
+  <li>
+    <span class="link-arrow">󰘍</span>
+    <span class="link-icon">󰓹</span>
+    <a href="/tag/{{ tag['name'] }}"
+       hx-get="/tag/{{ tag['name'] }}"
+       hx-target="#bookmark-list"
+       hx-swap="innerHTML"
+       hx-push-url="true">{{ tag['name'] }}</a>
+    <span class="link-count">{{ tag['bookmark_count'] }}</span>
+  </li>
+  {% endfor %}
+</ul>

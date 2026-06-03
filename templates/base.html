@@ -105,26 +105,19 @@
                   hx-target="#folder-list"
                   hx-swap="outerHTML"
                   hx-on::after-request="this.reset()">
-              <input class="sidebar-inline-input" type="text" name="name" placeholder="+ New folder" />
+              <input class="sidebar-inline-input" type="text" name="name" placeholder="+ New Tag" />
             </form>
           </div>
 
           <div class="links">
             <div class="link-title">Tags</div>
-            <ul class="tag-links">
-              {% for tag in tags %}
-              <li>
-                <span class="link-arrow">󰘍</span>
-                <span class="link-icon">󰓹</span>
-                <a href="/tag/{{ tag['name'] }}"
-                    hx-get="/tag/{{ tag['name'] }}"
-                    hx-target="#bookmark-list"
-                    hx-swap="innerHTML"
-                    hx-push-url="true">{{ tag['name'] }}</a>
-                  <span class="link-count">{{ tag['bookmark_count'] }}</span>
-                </li>
-                {% endfor %}
-            </ul>
+            {% include "partials/tag_list.html" %}
+            <form hx-post="/tags"
+                  hx-target="#tag-list"
+                  hx-swap="outerHTML"
+                  hx-on::after-request="this.reset()">
+              <input class="sidebar-inline-input" type="text" name="name" placeholder="+ New Tag" />
+            </form>
           </div>
 
         </div>

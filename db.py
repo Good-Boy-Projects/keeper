@@ -152,6 +152,12 @@ def get_all_tags():
         ORDER BY t.name ASC
     """).fetchall()
 
+def create_tag(name):
+    db = get_db()
+    db.execute("INSERT OR IGNORE INTO tags (name) VALUES (?)", (name,))
+    db.commit()
+
+
 def get_favorites():
     db = get_db()
     return db.execute("""
