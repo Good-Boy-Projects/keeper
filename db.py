@@ -205,3 +205,13 @@ def get_untagged():
         GROUP BY b.id
         ORDER BY b.saved_at DESC
     """).fetchall()
+
+def get_stats(bookmarks):
+    count = len(bookmarks)
+    words = sum(b["word_count"] or 0 for b in bookmarks)
+    read_time = sum(b["read_time"] or 0 for b in bookmarks)
+    return {
+        "count": count,
+        "words": words,
+        "read_time": read_time
+    }

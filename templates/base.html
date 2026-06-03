@@ -159,8 +159,9 @@
         </main>
       </div>
 
+      <!--maybe remove footer bar later?--->
       <footer class="status-bar">
-        <span>10 Bookmarks &nbsp; 15,000 Words</span>
+        <span>{{ (stats.count if stats is defined else 0) }} Bookmarks &nbsp; {{ "{:,}".format(stats.words if stats is defined else 0) }} Words</span>
         <span>v0.1.0 &nbsp; <a href="https://keeper.fyi">Keeper.fyi</a></span>
       </footer>
     </div>

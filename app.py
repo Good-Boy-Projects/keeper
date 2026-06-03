@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, make_response
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, create_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, create_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived, get_stats
 from scraper import fetch_metadata
 from files import save_article
 
@@ -21,6 +21,7 @@ def index():
     bookmarks = get_bookmarks(q=q)
     folders = get_all_folders()
     tags = get_all_tags()
+    stats = get_stats(bookmarks)
     if is_htmx():
         return render_template("partials/bookmark_list.html",
             bookmarks=bookmarks
@@ -28,7 +29,8 @@ def index():
     return render_template("index.html",
         bookmarks=bookmarks,
         folders=folders,
-        tags=tags
+        tags=tags,
+        stats=stats,
     )
 
 @app.route("/grid")
@@ -36,6 +38,7 @@ def grid():
     bookmarks = get_bookmarks()
     folders = get_all_folders()
     tags = get_all_tags()
+    stats = get_stats(bookmarks)
     if is_htmx():
         return render_template("partials/bookmark_grid.html",
             bookmarks=bookmarks
@@ -43,7 +46,8 @@ def grid():
     return render_template("grid.html",
         bookmarks=bookmarks,
         folders=folders,
-        tags=tags
+        tags=tags,
+        stats=stats,
     )
 
 @app.route("/bookmark/<int:id>")
@@ -51,12 +55,11 @@ def reading(id):
     bookmark = get_bookmark(id)
     if not bookmark:
         return "Bookmark not found", 404
-    folders = get_all_folders()
-    tags = get_all_tags()
+    stats = get_stats([bookmark])    # wrap in a list
     return render_template("reading.html",
         bookmark=bookmark,
-        folders=folders,
-        tags=tags
+        stats=stats,
+        **sidebar_context()
     )
 
 @app.route("/bookmark/<int:id>/item")
@@ -144,6 +147,8 @@ def folder_view(name):
     bookmarks = get_bookmarks(folder=name)
     folders = get_all_folders()
     tags = get_all_tags()
+    stats = get_stats(bookmarks)
+
     if is_htmx():
         return render_template("partials/bookmark_list.html",
             bookmarks=bookmarks
@@ -152,6 +157,7 @@ def folder_view(name):
         bookmarks=bookmarks,
         folders=folders,
         tags=tags,
+        stats=stats,
         active_filter=name
     )
 
@@ -171,6 +177,8 @@ def tag_view(name):
     bookmarks = get_bookmarks(tag=name)
     folders = get_all_folders()
     tags = get_all_tags()
+    stats = get_stats(bookmarks)
+
     if is_htmx():
         return render_template("partials/bookmark_list.html",
             bookmarks=bookmarks
@@ -179,6 +187,7 @@ def tag_view(name):
         bookmarks=bookmarks,
         folders=folders,
         tags=tags,
+        stats=stats,
         active_filter=name
     )
 
@@ -198,6 +207,7 @@ def favorites():
     bookmarks = get_favorites()
     folders = get_all_folders()
     tags = get_all_tags()
+    stats = get_stats(bookmarks)
     if is_htmx():
         return render_template("partials/bookmark_list.html",
             bookmarks=bookmarks
@@ -206,6 +216,7 @@ def favorites():
         bookmarks=bookmarks,
         folders=folders,
         tags=tags,
+        stats=stats,
         active_filter="Favorites"
     )
 
@@ -214,6 +225,7 @@ def archived():
     bookmarks = get_archived()
     folders = get_all_folders()
     tags = get_all_tags()
+    stats = get_stats(bookmarks)
     if is_htmx():
         return render_template("partials/bookmark_list.html",
             bookmarks=bookmarks
@@ -230,6 +242,7 @@ def untagged():
     bookmarks = get_untagged()
     folders = get_all_folders()
     tags = get_all_tags()
+    stats = get_stats(bookmarks)
     if is_htmx():
         return render_template("partials/bookmark_list.html",
             bookmarks=bookmarks
@@ -238,6 +251,7 @@ def untagged():
         bookmarks=bookmarks,
         folders=folders,
         tags=tags,
+        stats=stats,
         active_filter="Untagged"
     )
 
