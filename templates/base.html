@@ -180,39 +180,7 @@
       </footer>
     </div>
 
-    <!-- Edit Modal -->
-<div class="modal-overlay" id="edit-modal-overlay" onclick="closeEditModal(event)">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span class="modal-title">Edit Bookmark</span>
-      <button class="modal-close" onclick="hideEditModal()">✕</button>
-    </div>
-
-    <form id="edit-form" method="POST" action="">
-      <div class="modal-body">
-        <div class="modal-field">
-          <label class="modal-label">Title</label>
-          <input class="modal-input" type="text" name="title" id="edit-title" placeholder="Bookmark title" />
-        </div>
-        <div class="modal-field">
-          <label class="modal-label">Folders</label>
-          <input class="modal-input" type="text" name="folders" id="edit-folders" placeholder="Tech, Design" />
-          <span class="modal-hint">Separate folders with commas</span>
-        </div>
-        <div class="modal-field">
-          <label class="modal-label">Tags</label>
-          <input class="modal-input" type="text" name="tags" id="edit-tags" placeholder="tag1, tag2, tag3" />
-          <span class="modal-hint">Separate tags with commas</span>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="button-confirm">Save</button>
-        <button type="button" class="button-cancel" onclick="hideEditModal()">Cancel</button>
-      </div>
-    </form>
-
-  </div>
-</div>
+<div id="modal-container"></div>
 
     <script>
 
@@ -253,14 +221,14 @@ function hideAddForm() {
 }
 
       function hideEditModal() {
-        document.getElementById("edit-modal-overlay").classList.remove("active");
-      }
+  document.getElementById("modal-container").innerHTML = "";
+}
 
-      function closeEditModal(event) {
-        if (event.target === document.getElementById("edit-modal-overlay")) {
-          hideEditModal();
-        }
-      }
+function closeEditModal(event) {
+  if (event.target.classList.contains("modal-overlay")) {
+    hideEditModal();
+  }
+}
 
       function saveEdit() {
         const title  = document.getElementById("edit-title").value;
