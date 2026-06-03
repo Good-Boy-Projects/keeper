@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, make_response
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, create_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
 from scraper import fetch_metadata
 from files import save_article
 
@@ -181,6 +181,17 @@ def tag_view(name):
         tags=tags,
         active_filter=name
     )
+
+@app.route("/tags", methods=["POST"])
+def add_tag():
+    name = request.form.get("name", "").strip()
+    if not name:
+        return "", 400
+    create_tag(name)
+    if is_htmx():
+        tags = get_all_tags()
+        return render_template("partials/tag_list.html", tags=tags)
+    return redirect("/")
 
 @app.route("/favorites")
 def favorites():
