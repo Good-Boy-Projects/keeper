@@ -1,0 +1,35 @@
+<div class="modal-overlay active" id="edit-modal-overlay" onclick="closeEditModal(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">Edit Bookmark</span>
+      <button class="modal-close" onclick="hideEditModal()">✕</button>
+    </div>
+    <form method="POST" action="/bookmark/{{ bookmark['id'] }}/update">
+      <div class="modal-body">
+        <div class="modal-field">
+          <label class="modal-label">Title</label>
+          <input class="modal-input" type="text" name="title" id="edit-title"
+                 value="{{ bookmark['title'] or '' }}" />
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Folders</label>
+          <input class="modal-input" type="text" name="folders" id="edit-folders"
+                 value="{{ bookmark['folders'] or '' }}"
+                 placeholder="Tech, Design" />
+          <span class="modal-hint">Separate folders with commas</span>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Tags</label>
+          <input class="modal-input" type="text" name="tags" id="edit-tags"
+                 value="{{ bookmark['tags'] or '' }}"
+                 placeholder="tag1, tag2" />
+          <span class="modal-hint">Separate tags with commas</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="button-confirm">Save</button>
+        <button type="button" class="button-cancel" onclick="hideEditModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
