@@ -14,13 +14,15 @@
           style="{{ 'color: red;' if bookmark['is_favorite'] else '' }}">♡</button>
 </form>
 
-    {% set safe_title = bookmark['title']|replace("'", "\\'") %}
-    {% set safe_folders = bookmark['folders'] if bookmark['folders'] else "" %}
-    {% set safe_tags = bookmark['tags'] if bookmark['tags'] else "" %}
+
     <button
       class="action-btn edit-btn"
       title="Edit"
-      onclick="showEditModal({{ bookmark['id'] }}, '{{ safe_title }}', '{{ safe_folders }}', '{{ safe_tags }}')">✎</button>
+      hx-get="/bookmark/{{ bookmark['id'] }}/edit-form"
+      hx-target="#modal-container"
+      hx-swap="innerHTML">✎
+    </button>
+
 
     <form hx-post="/bookmark/{{ bookmark['id'] }}/archive"
           hx-target="#item-{{ bookmark['id'] }}"
