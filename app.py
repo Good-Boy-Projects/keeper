@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, make_response
 from urllib.parse import urlparse
 from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
 from scraper import fetch_metadata
@@ -97,6 +97,14 @@ def update_bookmark_route(id):
         "folders": folders,
         "tags": tags,
     })
+
+    if is_htmx():
+        bookmark = get_bookmark(id)
+        response = make_response(
+            render_template("partials/bookmark_item.html", bookmark=bookmark)
+        )
+        response.headers["HX-Trigger"] = "closeModal"
+        return response
 
     return redirect(request.referrer or "/")
 
