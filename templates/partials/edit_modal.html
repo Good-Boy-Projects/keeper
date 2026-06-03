@@ -8,27 +8,47 @@
     <form hx-post="/bookmark/{{ bookmark['id'] }}/update"
           hx-target="#item-{{ bookmark['id'] }}"
           hx-swap="outerHTML">
+
       <div class="modal-body">
         <div class="modal-field">
           <label class="modal-label">Title</label>
           <input class="modal-input" type="text" name="title" id="edit-title"
                  value="{{ bookmark['title'] or '' }}" />
         </div>
+
         <div class="modal-field">
           <label class="modal-label">Folders</label>
           <input class="modal-input" type="text" name="folders" id="edit-folders"
-                 value="{{ bookmark['folders'] or '' }}"
-                 placeholder="Tech, Design" />
+                value="{{ bookmark['folders'] or '' }}"
+                placeholder="Tech, Design" />
+          <div class="modal-suggestions">
+            {% for folder in folders %}
+              <span class="modal-suggestion"
+                    onclick="appendSuggestion('edit-folders', '{{ folder['name'] }}')">
+                {{ folder['name'] }}
+              </span>
+            {% endfor %}
+          </div>
           <span class="modal-hint">Separate folders with commas</span>
         </div>
+
         <div class="modal-field">
           <label class="modal-label">Tags</label>
           <input class="modal-input" type="text" name="tags" id="edit-tags"
                  value="{{ bookmark['tags'] or '' }}"
                  placeholder="tag1, tag2" />
+            <div class="modal-suggestions">
+            {% for tag in tags %}
+              <span class="modal-suggestion"
+                    onclick="appendSuggestion('edit-tags', '{{ tag['name'] }}')">
+                {{ tag['name'] }}
+              </span>
+            {% endfor %}
+          </div>
           <span class="modal-hint">Separate tags with commas</span>
         </div>
       </div>
+      
       <div class="modal-footer">
         <button type="submit" class="button-confirm">Save</button>
         <button type="button" class="button-cancel" onclick="hideEditModal()">Cancel</button>
