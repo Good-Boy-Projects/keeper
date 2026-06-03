@@ -125,11 +125,27 @@ def toggle_archive(id):
 
 def get_all_folders():
     db = get_db()
-    return db.execute("SELECT * FROM folders ORDER BY name ASC").fetchall()
+    return db.execute("""
+        SELECT f.*, COUNT(bf.bookmark_id) as bookmark_count
+        FROM folders f
+        LEFT JOIN bookmark_folders bf ON f.id = bf.folder_id
+        LEFT JOIN bookmarks b ON bf.bookmark_id = b.id
+            AND b.is_archived = 0
+        GROUP BY f.id
+        ORDER BY f.name ASC
+    """).fetchall()
 
 def get_all_tags():
     db = get_db()
-    return db.execute("SELECT * FROM tags ORDER BY name ASC").fetchall()
+    return db.execute("""
+        SELECT t.*, COUNT(bt.bookmark_id) as bookmark_count
+        FROM tags t
+        LEFT JOIN bookmark_tags bt ON t.id = bt.tag_id
+        LEFT JOIN bookmarks b ON bt.bookmark_id = b.id
+            AND b.is_archived = 0
+        GROUP BY t.id
+        ORDER BY t.name ASC
+    """).fetchall()
 
 def get_favorites():
     db = get_db()
