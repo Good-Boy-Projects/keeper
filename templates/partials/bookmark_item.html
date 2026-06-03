@@ -45,7 +45,11 @@
     <button
       class="action-btn edit-btn"
       title="Edit"
-      onclick="showEditModal({{ bookmark['id'] }}, '{{ safe_title }}', '{{ safe_folders }}', '{{ safe_tags }}')">✎</button>
+      hx-get="/bookmark/{{ bookmark['id'] }}/edit-form"
+      hx-target="#modal-container"
+      hx-swap="innerHTML">✎
+    </button>
+
 
     <form hx-post="/bookmark/{{ bookmark['id'] }}/archive"
           hx-target="closest .bookmark-item"
