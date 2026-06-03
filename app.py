@@ -7,6 +7,12 @@ from files import save_article
 def is_htmx():
     return request.headers.get("HX-Request") == "true"
 
+def sidebar_context():
+    return {
+        "folders": get_all_folders(),
+        "tags": get_all_tags()
+    }
+
 app = Flask(__name__)
 
 @app.route("/")
