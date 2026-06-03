@@ -155,6 +155,17 @@ def folder_view(name):
         active_filter=name
     )
 
+@app.route("/folders", methods=["POST"])
+def add_folder():
+    name = request.form.get("name", "").strip()
+    if not name:
+        return "", 400
+    create_folder(name)
+    if is_htmx():
+        folders = get_all_folders()
+        return render_template("partials/folder_list.html", folders=folders)
+    return redirect("/")
+
 @app.route("/tag/<name>")
 def tag_view(name):
     bookmarks = get_bookmarks(tag=name)
