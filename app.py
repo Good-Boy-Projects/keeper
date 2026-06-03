@@ -73,6 +73,19 @@ def add_bookmark():
         return render_template("partials/bookmark_item.html", bookmark=bookmark)
     return redirect("/")
 
+@app.route("/bookmark/<int:id>/edit-form")
+def edit_form(id):
+    bookmark = get_bookmark(id)
+    if not bookmark:
+        return "Bookmark not found", 404
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("partials/edit_modal.html",
+        bookmark=bookmark,
+        folders=folders,
+        tags=tags
+    )
+
 @app.route("/bookmark/<int:id>/update", methods=["POST"])
 def update_bookmark_route(id):
     title = request.form.get("title", "")
