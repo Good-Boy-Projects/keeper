@@ -98,6 +98,14 @@ def update_bookmark_route(id):
         "tags": tags,
     })
 
+    if is_htmx():
+        bookmark = get_bookmark(id)
+        response = make_response(
+            render_template("partials/bookmark_item.html", bookmark=bookmark)
+        )
+        response.headers["HX-Trigger"] = "closeModal"
+        return response
+
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/favorite", methods=["POST"])
