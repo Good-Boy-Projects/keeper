@@ -206,6 +206,14 @@ a:hover {
   font-family: "Commit Mono";
 }
 
+.link-count {
+  font-size: 0.7rem;
+  color: var(--keeper-grey);
+  font-family: "Commit Mono";
+  margin-left: auto;
+  padding-right: 10%;
+}
+
 /* ─── Content Area ───────────────────────────────────────────────────────── */
 
 .content {
