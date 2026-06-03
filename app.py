@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, make_response
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
+from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived
 from scraper import fetch_metadata
 from files import save_article
 
@@ -154,6 +154,17 @@ def folder_view(name):
         tags=tags,
         active_filter=name
     )
+
+@app.route("/folders", methods=["POST"])
+def add_folder():
+    name = request.form.get("name", "").strip()
+    if not name:
+        return "", 400
+    create_folder(name)
+    if is_htmx():
+        folders = get_all_folders()
+        return render_template("partials/folder_list.html", folders=folders)
+    return redirect("/")
 
 @app.route("/tag/<name>")
 def tag_view(name):

@@ -135,6 +135,11 @@ def get_all_folders():
         ORDER BY f.name ASC
     """).fetchall()
 
+def create_folder(name):
+    db = get_db()
+    db.execute("INSERT OR IGNORE INTO folders (name) VALUES (?)", (name,))
+    db.commit()
+
 def get_all_tags():
     db = get_db()
     return db.execute("""
