@@ -214,6 +214,20 @@ a:hover {
   padding-right: 10%;
 }
 
+.sidebar-inline-input {
+  width: 90%;
+  font-family: inherit;
+  border: 1px solid var(--keeper-grey);
+  padding: 5px;
+  margin-top: 4px;
+  margin-right: 5px;
+  outline: none;
+}
+
+.sidebar-inline-input:focus {
+  border-color: var(--keeper-blue);
+}
+
 /* ─── Content Area ───────────────────────────────────────────────────────── */
 
 .content {
