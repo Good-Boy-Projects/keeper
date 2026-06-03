@@ -207,7 +207,7 @@ function hideAddForm() {
         hideAddForm();
       }
 
-      function showEditModal(id, title, folders, tags) {
+  function showEditModal(id, title, folders, tags) {
   // Set the form action to the correct route for this bookmark
   document.getElementById("edit-form").action = "/bookmark/" + id + "/update";
 
@@ -218,17 +218,17 @@ function hideAddForm() {
 
   // Show the modal
   document.getElementById("edit-modal-overlay").classList.add("active");
-}
+  }
 
-      function hideEditModal() {
+  function hideEditModal() {
   document.getElementById("modal-container").innerHTML = "";
-}
+  }
 
-function closeEditModal(event) {
+  function closeEditModal(event) {
   if (event.target.classList.contains("modal-overlay")) {
     hideEditModal();
+    }
   }
-}
 
       function saveEdit() {
         const title  = document.getElementById("edit-title").value;
@@ -238,6 +238,10 @@ function closeEditModal(event) {
         console.log("Saving:", { title, url, folder, tags });
         hideEditModal();
       }
+
+      document.body.addEventListener("closeModal", function() {
+  document.getElementById("modal-container").innerHTML = "";
+});
     </script>
   </body>
 </html>
