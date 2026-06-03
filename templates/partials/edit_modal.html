@@ -4,7 +4,10 @@
       <span class="modal-title">Edit Bookmark</span>
       <button class="modal-close" onclick="hideEditModal()">✕</button>
     </div>
-    <form method="POST" action="/bookmark/{{ bookmark['id'] }}/update">
+
+    <form hx-post="/bookmark/{{ bookmark['id'] }}/update"
+          hx-target="#item-{{ bookmark['id'] }}"
+          hx-swap="outerHTML">
       <div class="modal-body">
         <div class="modal-field">
           <label class="modal-label">Title</label>
@@ -31,5 +34,6 @@
         <button type="button" class="button-cancel" onclick="hideEditModal()">Cancel</button>
       </div>
     </form>
+
   </div>
 </div>
