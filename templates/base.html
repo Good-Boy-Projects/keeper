@@ -212,6 +212,15 @@
   document.body.addEventListener("closeModal", function() {
     document.getElementById("modal-container").innerHTML = "";
   });
+
+  function appendSuggestion(inputId, value) {
+  const input = document.getElementById(inputId);
+  const current = input.value.split(",").map(v => v.trim()).filter(v => v);
+  if (!current.includes(value)) {
+    current.push(value);
+    input.value = current.join(", ");
+  }
+}
 </script>
     
 
