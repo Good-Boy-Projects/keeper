@@ -104,16 +104,17 @@
 
               <ul class="folder-links">
               {% for folder in folders %}
-              <li>
-                <span class="link-arrow">󰘍</span>
-                <span class="link-icon"></span>
-                <a href="/folder/{{ folder['name'] }}"
-                  hx-get="/folder/{{ folder['name'] }}"
-                  hx-target="#bookmark-list"
-                  hx-swap="innerHTML"
-                  hx-push-url="true">{{ folder['name'] }}</a>
-              </li>
-              {% endfor %}
+                <li>
+                  <span class="link-arrow">󰘍</span>
+                  <span class="link-icon"></span>
+                  <a href="/folder/{{ folder['name'] }}"
+                    hx-get="/folder/{{ folder['name'] }}"
+                    hx-target="#bookmark-list"
+                    hx-swap="innerHTML"
+                    hx-push-url="true">{{ folder['name'] }}</a>
+                  <span class="link-count">{{ folder['bookmark_count'] }}</span>
+                </li>
+                {% endfor %}
             </ul>
 
           </div>
@@ -126,12 +127,13 @@
                 <span class="link-arrow">󰘍</span>
                 <span class="link-icon">󰓹</span>
                 <a href="/tag/{{ tag['name'] }}"
-                hx-get="/tag/{{ tag['name'] }}"
-                hx-target="#bookmark-list"
-                hx-swap="innerHTML"
-                hx-push-url="true">{{ tag['name'] }}</a>
-              </li>
-              {% endfor %}
+                    hx-get="/tag/{{ tag['name'] }}"
+                    hx-target="#bookmark-list"
+                    hx-swap="innerHTML"
+                    hx-push-url="true">{{ tag['name'] }}</a>
+                  <span class="link-count">{{ tag['bookmark_count'] }}</span>
+                </li>
+                {% endfor %}
             </ul>
           </div>
 
