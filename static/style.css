@@ -660,6 +660,26 @@ select.modal-input {
   height: 32px;
 }
 
+.modal-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.modal-suggestion {
+  border: 1px solid var(--keeper-grey);
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--keeper-grey);
+}
+
+.modal-suggestion:hover {
+  border-color: var(--keeper-blue);
+  color: var(--keeper-blue);
+}
+
 /* ─── Footer ─────────────────────────────────────────────────────────────── */
 
 .status-bar {
