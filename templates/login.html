@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keeper — Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="login-box">
+        <div class="login-header">Keeper v0.1.0</div>
+        <form method="POST" action="/login">
+          {% if error %}
+            <p class="login-error">{{ error }}</p>
+          {% endif %}
+          <div class="login-field">
+            <input class="modal-input" type="text" name="username" placeholder="Username" autofocus />
+          </div>
+          <div class="login-field">
+            <input class="modal-input" type="password" name="password" placeholder="Password" />
+          </div>
+          <button type="submit" class="button" style="width: calc(100% - 32px); margin: 0 16px 16px 16px;">Login</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

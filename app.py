@@ -1,8 +1,22 @@
-from flask import Flask, render_template, redirect, request, make_response
+import os
+from functools import wraps
+from flask import Flask, render_template, redirect, request, session
 from urllib.parse import urlparse
 from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, create_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived, get_stats
 from scraper import fetch_metadata
 from files import save_article
+
+app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
+print("SECRET KEY:", app.secret_key)  # add this line temporarily
+
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated
 
 def is_htmx():
     return request.headers.get("HX-Request") == "true"
@@ -13,9 +27,30 @@ def sidebar_context():
         "tags": get_all_tags()
     }
 
-app = Flask(__name__)
+@app.route("/login")
+def login():
+    if session.get("logged_in"):
+        return redirect("/")
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
+@app.route("/login", methods=["POST"])
+def login_post():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    if (username == os.environ.get("KEEPER_USER", "admin") and
+            password == os.environ.get("KEEPER_PASSWORD", "password")):
+        session["logged_in"] = True
+        return redirect("/")
+    return render_template("login.html", error="Invalid credentials")
+
 
 @app.route("/")
+@login_required
 def index():
     q = request.args.get("q", "")
     bookmarks = get_bookmarks(q=q)
@@ -34,6 +69,7 @@ def index():
     )
 
 @app.route("/grid")
+@login_required
 def grid():
     bookmarks = get_bookmarks()
     folders = get_all_folders()
@@ -51,6 +87,7 @@ def grid():
     )
 
 @app.route("/bookmark/<int:id>")
+@login_required
 def reading(id):
     bookmark = get_bookmark(id)
     if not bookmark:
@@ -63,11 +100,13 @@ def reading(id):
     )
 
 @app.route("/bookmark/<int:id>/item")
+@login_required
 def bookmark_item(id):
     bookmark = get_bookmark(id)
     return render_template("partials/bookmark_item.html", bookmark=bookmark)
 
 @app.route("/bookmarks", methods=["POST"])
+@login_required
 def add_bookmark():
     url = request.form.get("url")
     if not url:
@@ -83,6 +122,7 @@ def add_bookmark():
     return redirect("/")
 
 @app.route("/bookmark/<int:id>/edit-form")
+@login_required
 def edit_form(id):
     bookmark = get_bookmark(id)
     if not bookmark:
@@ -96,6 +136,7 @@ def edit_form(id):
     )
 
 @app.route("/bookmark/<int:id>/update", methods=["POST"])
+@login_required
 def update_bookmark_route(id):
     title = request.form.get("title", "")
     folders = [f.strip() for f in request.form.get("folders", "").split(",") if f.strip()]
@@ -118,6 +159,7 @@ def update_bookmark_route(id):
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/favorite", methods=["POST"])
+@login_required
 def toggle_favorite_route(id):
     toggle_favorite(id)
     if is_htmx():
@@ -129,6 +171,7 @@ def toggle_favorite_route(id):
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/archive", methods=["POST"])
+@login_required
 def toggle_archive_route(id):
     toggle_archive(id)
     if is_htmx():
@@ -136,6 +179,7 @@ def toggle_archive_route(id):
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/delete", methods=["POST"])
+@login_required
 def delete_bookmark_route(id):
     delete_bookmark(id)
     if is_htmx():
@@ -143,6 +187,7 @@ def delete_bookmark_route(id):
     return redirect("/")
 
 @app.route("/folder/<name>")
+@login_required
 def folder_view(name):
     bookmarks = get_bookmarks(folder=name)
     folders = get_all_folders()
@@ -162,6 +207,7 @@ def folder_view(name):
     )
 
 @app.route("/folders", methods=["POST"])
+@login_required
 def add_folder():
     name = request.form.get("name", "").strip()
     if not name:
@@ -173,6 +219,7 @@ def add_folder():
     return redirect("/")
 
 @app.route("/tag/<name>")
+@login_required
 def tag_view(name):
     bookmarks = get_bookmarks(tag=name)
     folders = get_all_folders()
@@ -192,6 +239,7 @@ def tag_view(name):
     )
 
 @app.route("/tags", methods=["POST"])
+@login_required
 def add_tag():
     name = request.form.get("name", "").strip()
     if not name:
@@ -203,6 +251,7 @@ def add_tag():
     return redirect("/")
 
 @app.route("/favorites")
+@login_required
 def favorites():
     bookmarks = get_favorites()
     folders = get_all_folders()
@@ -221,6 +270,7 @@ def favorites():
     )
 
 @app.route("/archived")
+@login_required
 def archived():
     bookmarks = get_archived()
     folders = get_all_folders()
@@ -238,6 +288,7 @@ def archived():
     )
 
 @app.route("/untagged")
+@login_required
 def untagged():
     bookmarks = get_untagged()
     folders = get_all_folders()
