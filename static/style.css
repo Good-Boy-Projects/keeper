@@ -228,6 +228,12 @@ a:hover {
   border-color: var(--keeper-blue);
 }
 
+.sidebar-footer {
+  padding: 10px;
+  border-top: 2px solid black;
+  font-size: 0.85rem;
+}
+
 /* ─── Content Area ───────────────────────────────────────────────────────── */
 
 .content {
