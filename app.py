@@ -9,10 +9,6 @@ from files import save_article
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-in-production")
 
-export KEEPER_USER=admin
-export KEEPER_PASSWORD=yourpassword
-export SECRET_KEY=yoursecretkey
-
 def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
