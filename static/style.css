@@ -31,7 +31,7 @@
 }
 
 body {
-  font-family: "Berkeley", system-ui, monospace;
+  font-family: Arial, "Berkeley", system-ui, monospace;
 }
 
 a {
@@ -742,4 +742,46 @@ select.modal-input {
   font-size: 0.75rem;
   color: var(--keeper-grey);
   margin-bottom: 8px;
+}
+
+/* ─── Login Page ─────────────────────────────────────────────────────────── */
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-box {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+}
+
+.login-header {
+  border-bottom: 2px solid black;
+  padding: 10px;
+  text-decoration: underline;
+}
+
+.login-field {
+  padding: 0 16px;
+  margin-bottom: 12px;
+}
+
+.login-field:first-of-type {
+  margin-top: 20px;
+}
+
+.login-field .modal-input {
+  width: 100%;
+}
+
+.login-error {
+  color: red;
+  font-size: 0.85rem;
+  padding: 8px 16px 0 16px;
+  margin: 0;
 }
