@@ -55,6 +55,7 @@ def login_post():
 
 
 @app.route("/")
+@login_required
 def index():
     q = request.args.get("q", "")
     bookmarks = get_bookmarks(q=q)
@@ -73,6 +74,7 @@ def index():
     )
 
 @app.route("/grid")
+@login_required
 def grid():
     bookmarks = get_bookmarks()
     folders = get_all_folders()
@@ -90,6 +92,7 @@ def grid():
     )
 
 @app.route("/bookmark/<int:id>")
+@login_required
 def reading(id):
     bookmark = get_bookmark(id)
     if not bookmark:
@@ -102,11 +105,13 @@ def reading(id):
     )
 
 @app.route("/bookmark/<int:id>/item")
+@login_required
 def bookmark_item(id):
     bookmark = get_bookmark(id)
     return render_template("partials/bookmark_item.html", bookmark=bookmark)
 
 @app.route("/bookmarks", methods=["POST"])
+@login_required
 def add_bookmark():
     url = request.form.get("url")
     if not url:
@@ -122,6 +127,7 @@ def add_bookmark():
     return redirect("/")
 
 @app.route("/bookmark/<int:id>/edit-form")
+@login_required
 def edit_form(id):
     bookmark = get_bookmark(id)
     if not bookmark:
@@ -135,6 +141,7 @@ def edit_form(id):
     )
 
 @app.route("/bookmark/<int:id>/update", methods=["POST"])
+@login_required
 def update_bookmark_route(id):
     title = request.form.get("title", "")
     folders = [f.strip() for f in request.form.get("folders", "").split(",") if f.strip()]
@@ -157,6 +164,7 @@ def update_bookmark_route(id):
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/favorite", methods=["POST"])
+@login_required
 def toggle_favorite_route(id):
     toggle_favorite(id)
     if is_htmx():
@@ -168,6 +176,7 @@ def toggle_favorite_route(id):
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/archive", methods=["POST"])
+@login_required
 def toggle_archive_route(id):
     toggle_archive(id)
     if is_htmx():
@@ -175,6 +184,7 @@ def toggle_archive_route(id):
     return redirect(request.referrer or "/")
 
 @app.route("/bookmark/<int:id>/delete", methods=["POST"])
+@login_required
 def delete_bookmark_route(id):
     delete_bookmark(id)
     if is_htmx():
@@ -182,6 +192,7 @@ def delete_bookmark_route(id):
     return redirect("/")
 
 @app.route("/folder/<name>")
+@login_required
 def folder_view(name):
     bookmarks = get_bookmarks(folder=name)
     folders = get_all_folders()
@@ -201,6 +212,7 @@ def folder_view(name):
     )
 
 @app.route("/folders", methods=["POST"])
+@login_required
 def add_folder():
     name = request.form.get("name", "").strip()
     if not name:
@@ -212,6 +224,7 @@ def add_folder():
     return redirect("/")
 
 @app.route("/tag/<name>")
+@login_required
 def tag_view(name):
     bookmarks = get_bookmarks(tag=name)
     folders = get_all_folders()
@@ -231,6 +244,7 @@ def tag_view(name):
     )
 
 @app.route("/tags", methods=["POST"])
+@login_required
 def add_tag():
     name = request.form.get("name", "").strip()
     if not name:
@@ -242,6 +256,7 @@ def add_tag():
     return redirect("/")
 
 @app.route("/favorites")
+@login_required
 def favorites():
     bookmarks = get_favorites()
     folders = get_all_folders()
@@ -260,6 +275,7 @@ def favorites():
     )
 
 @app.route("/archived")
+@login_required
 def archived():
     bookmarks = get_archived()
     folders = get_all_folders()
@@ -277,6 +293,7 @@ def archived():
     )
 
 @app.route("/untagged")
+@login_required
 def untagged():
     bookmarks = get_untagged()
     folders = get_all_folders()
