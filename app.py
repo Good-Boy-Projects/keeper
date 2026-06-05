@@ -7,7 +7,8 @@ from scraper import fetch_metadata
 from files import save_article
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-in-production")
+app.secret_key = os.environ.get("SECRET_KEY")
+print("SECRET KEY:", app.secret_key)  # add this line temporarily
 
 def login_required(f):
     @wraps(f)
@@ -25,8 +26,6 @@ def sidebar_context():
         "folders": get_all_folders(),
         "tags": get_all_tags()
     }
-
-app = Flask(__name__)
 
 @app.route("/login")
 def login():
