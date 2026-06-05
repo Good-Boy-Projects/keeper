@@ -1,8 +1,25 @@
-from flask import Flask, render_template, redirect, request, make_response
+import os
+from functools import wraps
+from flask import Flask, render_template, redirect, request, session
 from urllib.parse import urlparse
 from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, create_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived, get_stats
 from scraper import fetch_metadata
 from files import save_article
+
+app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-in-production")
+
+export KEEPER_USER=admin
+export KEEPER_PASSWORD=yourpassword
+export SECRET_KEY=yoursecretkey
+
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get("logged_in"):
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated
 
 def is_htmx():
     return request.headers.get("HX-Request") == "true"
@@ -14,6 +31,28 @@ def sidebar_context():
     }
 
 app = Flask(__name__)
+
+@app.route("/login")
+def login():
+    if session.get("logged_in"):
+        return redirect("/")
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
+@app.route("/login", methods=["POST"])
+def login_post():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    if (username == os.environ.get("KEEPER_USER", "admin") and
+            password == os.environ.get("KEEPER_PASSWORD", "password")):
+        session["logged_in"] = True
+        return redirect("/")
+    return render_template("login.html", error="Invalid credentials")
+
 
 @app.route("/")
 def index():
