@@ -140,6 +140,11 @@ def create_folder(name):
     db.execute("INSERT OR IGNORE INTO folders (name) VALUES (?)", (name,))
     db.commit()
 
+def delete_folder(id):
+    db = get_db()
+    db.execute("DELETE FROM folders WHERE id = ?", (id,))
+    db.commit()
+
 def get_all_tags():
     db = get_db()
     return db.execute("""
@@ -155,6 +160,11 @@ def get_all_tags():
 def create_tag(name):
     db = get_db()
     db.execute("INSERT OR IGNORE INTO tags (name) VALUES (?)", (name,))
+    db.commit()
+
+def delete_tag(id):
+    db = get_db()
+    db.execute("DELETE FROM tags WHERE id = ?", (id,))
     db.commit()
 
 
