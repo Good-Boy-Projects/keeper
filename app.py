@@ -48,6 +48,15 @@ def login_post():
         return redirect("/")
     return render_template("login.html", error="Invalid credentials")
 
+@app.route("/settings")
+@login_required
+def settings():
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("settings.html",
+        folders=folders,
+        tags=tags
+    )
 
 @app.route("/")
 @login_required
