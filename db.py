@@ -32,6 +32,21 @@ def get_bookmarks(folder=None, tag=None, q=None):
     query += " GROUP BY b.id ORDER BY b.saved_at DESC"
     return db.execute(query, params).fetchall()
 
+def get_all_bookmarks():
+    db = get_db()
+    return db.execute("""
+        SELECT b.*,
+               GROUP_CONCAT(DISTINCT f.name) as folders,
+               GROUP_CONCAT(DISTINCT t.name) as tags
+        FROM bookmarks b
+        LEFT JOIN bookmark_folders bf ON b.id = bf.bookmark_id
+        LEFT JOIN folders f           ON bf.folder_id = f.id
+        LEFT JOIN bookmark_tags bt    ON b.id = bt.bookmark_id
+        LEFT JOIN tags t              ON bt.tag_id = t.id
+        GROUP BY b.id
+        ORDER BY b.saved_at DESC
+    """).fetchall()
+
 def get_bookmark(id):
     db = get_db()
     return db.execute("""
