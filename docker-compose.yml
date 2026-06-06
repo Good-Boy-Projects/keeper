@@ -1,0 +1,17 @@
+services:
+  keeper:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - keeper-db:/app/keeper.db
+      - keeper-articles:/app/articles
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - KEEPER_USER=${KEEPER_USER}
+      - KEEPER_PASSWORD=${KEEPER_PASSWORD}
+    restart: unless-stopped
+
+volumes:
+  keeper-db:
+  keeper-articles:
