@@ -9,9 +9,17 @@ from db import get_bookmarks, get_bookmark, get_all_bookmarks, get_all_folders, 
 from scraper import fetch_metadata
 from files import save_article
 
+from dotenv import load_dotenv
+load_dotenv()
+
+from init_db import init_db
+
+if not os.path.exists("keeper.db"):
+    init_db()
+
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
-print("SECRET KEY:", app.secret_key)  # add this line temporarily
+
 
 def login_required(f):
     @wraps(f)
