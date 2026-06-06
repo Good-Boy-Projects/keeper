@@ -1,8 +1,11 @@
 import os
+import json
+import csv
+import io
 from functools import wraps
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, Response
 from urllib.parse import urlparse
-from db import get_bookmarks, get_bookmark, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, create_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived, get_stats
+from db import get_bookmarks, get_bookmark, get_all_bookmarks, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, delete_folder, create_tag, delete_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived, get_stats
 from scraper import fetch_metadata
 from files import save_article
 
@@ -48,6 +51,15 @@ def login_post():
         return redirect("/")
     return render_template("login.html", error="Invalid credentials")
 
+@app.route("/settings")
+@login_required
+def settings():
+    folders = get_all_folders()
+    tags = get_all_tags()
+    return render_template("settings.html",
+        folders=folders,
+        tags=tags
+    )
 
 @app.route("/")
 @login_required
@@ -206,6 +218,12 @@ def folder_view(name):
         active_filter=name
     )
 
+@app.route("/settings/folder/<int:id>/delete", methods=["POST"])
+@login_required
+def delete_folder_route(id):
+    delete_folder(id)
+    return redirect("/settings")
+
 @app.route("/folders", methods=["POST"])
 @login_required
 def add_folder():
@@ -237,6 +255,12 @@ def tag_view(name):
         stats=stats,
         active_filter=name
     )
+
+@app.route("/settings/tag/<int:id>/delete", methods=["POST"])
+@login_required
+def delete_tag_route(id):
+    delete_tag(id)
+    return redirect("/settings")
 
 @app.route("/tags", methods=["POST"])
 @login_required
@@ -304,6 +328,32 @@ def untagged():
         tags=tags,
         stats=stats,
         active_filter="Untagged"
+    )
+
+@app.route("/settings/export/json")
+@login_required
+def export_json():
+    bookmarks = get_all_bookmarks()
+    data = [dict(b) for b in bookmarks]
+    return Response(
+        json.dumps(data, indent=2, default=str),
+        mimetype="application/json",
+        headers={"Content-Disposition": "attachment; filename=keeper-export.json"}
+    )
+
+@app.route("/settings/export/csv")
+@login_required
+def export_csv():
+    bookmarks = get_all_bookmarks()
+    output = io.StringIO()
+    if bookmarks:
+        writer = csv.DictWriter(output, fieldnames=dict(bookmarks[0]).keys())
+        writer.writeheader()
+        writer.writerows([dict(b) for b in bookmarks])
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment; filename=keeper-export.csv"}
     )
 
 if __name__ == "__main__":

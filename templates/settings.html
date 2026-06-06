@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block topbar %}Settings{% endblock %}
+
+{% block content %}
+<div class="settings-view">
+
+  <div class="settings-section">
+    <div class="settings-section-title">Folders</div>
+    {% for folder in folders %}
+    <div class="settings-row">
+      <span>{{ folder['name'] }}</span>
+      <form method="POST" action="/settings/folder/{{ folder['id'] }}/delete">
+        <button type="submit" class="action-btn delete-btn"></button>
+      </form>
+    </div>
+    {% else %}
+    <p class="settings-empty">No folders yet.</p>
+    {% endfor %}
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">Tags</div>
+    {% for tag in tags %}
+    <div class="settings-row">
+      <span>{{ tag['name'] }}</span>
+      <form method="POST" action="/settings/tag/{{ tag['id'] }}/delete">
+        <button type="submit" class="action-btn delete-btn"></button>
+      </form>
+    </div>
+    {% else %}
+    <p class="settings-empty">No tags yet.</p>
+    {% endfor %}
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-title">Export</div>
+    <div class="settings-row">
+      <a href="/settings/export/json">Export as JSON</a>
+    </div>
+    <div class="settings-row">
+      <a href="/settings/export/csv">Export as CSV</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
