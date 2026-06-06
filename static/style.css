@@ -791,3 +791,38 @@ select.modal-input {
   padding: 8px 16px 0 16px;
   margin: 0;
 }
+
+/* ─── Settings View ──────────────────────────────────────────────────────── */
+
+.settings-view {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 600px;
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-section-title {
+  text-decoration: underline;
+  margin-bottom: 4px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--keeper-grey);
+  font-size: 0.9rem;
+}
+
+.settings-empty {
+  font-size: 0.85rem;
+  color: var(--keeper-grey);
+}
