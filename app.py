@@ -2,6 +2,7 @@ import os
 import json
 import csv
 import io
+import secrets
 from functools import wraps
 from flask import Flask, render_template, redirect, request, session, Response
 from urllib.parse import urlparse
@@ -18,7 +19,7 @@ if not os.path.exists("keeper.db"):
     init_db()
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY")
+app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
 
 
 def login_required(f):
