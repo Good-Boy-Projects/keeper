@@ -4,7 +4,7 @@ import csv
 import io
 import secrets
 from functools import wraps
-from flask import Flask, render_template, redirect, request, session, Response
+from flask import Flask, render_template, redirect, request, session, Response, make_response
 from urllib.parse import urlparse
 from db import get_bookmarks, get_bookmark, get_all_bookmarks, get_all_folders, get_all_tags, create_bookmark, delete_bookmark, update_bookmark, create_folder, delete_folder, create_tag, delete_tag, toggle_archive, toggle_favorite, get_favorites, get_untagged, get_archived, get_stats
 from scraper import fetch_metadata
@@ -15,7 +15,7 @@ load_dotenv()
 
 from init_db import init_db
 
-if not os.path.exists("keeper.db"):
+if not os.path.exists("/app/data/keeper.db"):
     init_db()
 
 app = Flask(__name__)
