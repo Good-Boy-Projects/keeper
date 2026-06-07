@@ -1,4 +1,4 @@
 seed.py
-articles/keeper.db
+articles/
 keeper.db
 .env

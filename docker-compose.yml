@@ -4,7 +4,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - keeper-db:/app/keeper.db
+      - keeper-db:/app/data
       - keeper-articles:/app/articles
     environment:
       - SECRET_KEY=${SECRET_KEY}
