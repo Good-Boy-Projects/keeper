@@ -40,17 +40,20 @@
   <hr>
   {% endif %}
 
-  <div class="reading-body">
-    {% if bookmark['content'] %}
-      {% for paragraph in bookmark['content'].split('\n\n') %}
-        <p>{{ paragraph }}</p>
-      {% endfor %}
-    {% else %}
-      <p class="reading-placeholder">
-        No article content saved.
-        <a href="{{ bookmark['url'] }}" target="_blank">Read on {{ bookmark['domain'] }}</a>
-      </p>
-    {% endif %}
-  </div>
+<div class="reading-body">
+  {% if bookmark['content'] %}
+    {% for paragraph in bookmark['content'].split('\n\n') %}
+      {% if paragraph.strip() %}
+        <p>{{ paragraph | replace('\n', '<br><br>') | safe }}</p>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p class="reading-placeholder">
+      No article content was extracted.
+      <a href="{{ bookmark['url'] }}" target="_blank">Read the original at {{ bookmark['domain'] }}</a>
+    </p>
+  {% endif %}
+</div>
+
 </div>
 {% endblock %}
