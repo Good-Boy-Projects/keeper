@@ -19,8 +19,19 @@ if not os.path.exists("/app/data/keeper.db"):
     init_db()
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
 
+def get_or_create_secret_key():
+    key_file = "/app/data/secret_key"
+    if os.path.exists(key_file):
+        with open(key_file, "r") as f:
+            return f.read().strip()
+    key = secrets.token_hex(32)
+    os.makedirs("/app/data", exist_ok=True)
+    with open(key_file, "w") as f:
+        f.write(key)
+    return key
+
+app.secret_key = os.environ.get("SECRET_KEY") or get_or_create_secret_key()
 
 def login_required(f):
     @wraps(f)
