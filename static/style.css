@@ -571,6 +571,8 @@ a:hover {
 
 .reading-body p {
   line-height: 1.5;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 /* ─── Edit Bookmark Modal ─────────────────────────────────────────────────────────── */
